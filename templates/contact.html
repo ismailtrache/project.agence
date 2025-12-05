@@ -5,7 +5,9 @@
     .contact-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
     @media (min-width: 768px) { .contact-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
     .contact-info p { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; font-size: 1.1rem; }
-    .contact-info i { font-size: 1.5rem; color: var(--primary); width: 30px; }
+    .contact-info i { font-size: 1.5rem; color: var(--primary); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+    .contact-social a { display: flex; align-items: center; gap: 0.7rem; color: var(--primary); text-decoration: none; margin-bottom: 0.8rem; word-break: break-all; }
+    .contact-social i { font-size: 1.5rem; color: white; background: var(--primary); width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
     .contact-form .form-group { margin-bottom: 1.5rem; }
     .contact-form label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
     .contact-form input, .contact-form textarea { width: 100%; padding: 1rem; border: 1px solid #ccc; border-radius: var(--border-radius); font-family: 'Poppins', sans-serif; font-size: 1rem; }
@@ -23,6 +25,11 @@
                 <p><i class="fas fa-phone"></i>{{ data.contact_info.telephone }}</p>
                 <p><i class="fas fa-envelope"></i>{{ data.contact_info.email }}</p>
                 <p><i class="fas fa-clock"></i>{{ data.contact_info.horaires }}</p>
+                <div class="contact-social">
+                    <a href="{{ data.contact_info.social_links.facebook }}" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i>{{ data.contact_info.social_links.facebook }}</a>
+                    <a href="{{ data.contact_info.social_links.instagram }}" target="_blank" rel="noopener"><i class="fab fa-instagram"></i>{{ data.contact_info.social_links.instagram }}</a>
+                    <a href="{{ data.contact_info.social_links.tiktok }}" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i>{{ data.contact_info.social_links.tiktok }}</a>
+                </div>
             </div>
             <div class="contact-form">
                 <h3>Envoyez-nous un message</h3>

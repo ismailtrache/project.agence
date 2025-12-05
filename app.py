@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import os
 from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash, generate_password_hash
 import json
 from functools import wraps
 from flask_mail import Mail, Message
@@ -20,9 +21,10 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
-# --- DÉTAILS DE CONNEXION ADMIN ---
-ADMIN_USERNAME = 'admin'
-ADMIN_PASSWORD = 'password123'
+# --- DÉTAILS DE CONNEXION ADMIN (ENV + HASH) ---
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+DEFAULT_ADMIN_HASH = generate_password_hash('password123')
+ADMIN_PASSWORD_HASH = os.environ.get('ADMIN_PASSWORD_HASH', DEFAULT_ADMIN_HASH)
 
 # Configuration des fichiers
 UPLOAD_FOLDER = 'static/uploads'
@@ -36,6 +38,7 @@ def load_data():
     if not os.path.exists(DATA_FILE):
         initial_data = {
             'company_name': 'TRACHE TRAVEL & SERVICES',
+            'tagline': 'Votre partenaire pour des voyages inoubliables.',
             'logo': 'uploads/logo.jpg',
             'services': [
                 {'nom': 'Réservation de Vols', 'description': 'Billets d\'avion au meilleur prix pour toutes les destinations mondiales.', 'icon': 'fa-plane-departure'},
@@ -66,7 +69,12 @@ def load_data():
                 'telephone': '+213 662 90 10 49 / +213 540 62 24 64',
                 'email': 'trachetravelservice@gmail.com',
                 'adresse': 'n°8 Rue Adda Ouled Derrer, Lot n°3 Hai Makkari, Oran, Algeria',
-                'horaires': 'Dim-Jeu: 9h-18h, Sam: 9h-13h'
+                'horaires': 'Dim-Jeu: 9h-18h, Sam: 9h-13h',
+                'social_links': {
+                    'facebook': 'https://www.facebook.com/trachetravel/',
+                    'instagram': 'https://www.instagram.com/trache_travel_services/',
+                    'tiktok': 'https://www.tiktok.com/@trachetravel.services'
+                }
             },
             'why_us': [
                 {'title': 'Meilleurs Prix Garantis', 'description': 'Nous négocions les meilleurs tarifs pour vous.', 'icon': 'fa-tags'},
@@ -83,6 +91,7 @@ def load_data():
             json.dump(initial_data, f, indent=4, ensure_ascii=False)
     with open(DATA_FILE, 'r', encoding='utf-8') as f:
         data = json.load(f)
+    data.setdefault('tagline', 'Votre partenaire pour des voyages inoubliables.')
     data.setdefault('assurance_tables_html', '')
     data.setdefault('visa_tables_html', '')
     data.setdefault('assurance_individuel', [
@@ -103,6 +112,12 @@ def load_data():
         {"duree": "1 an", "p2": "16000 DZD", "p3": "20700 DZD", "p4": "31600 DZD", "p5": "39300 DZD", "p6": "47200 DZD"}
     ])
     data.setdefault('visa_rows', [])
+    contact_info = data.setdefault('contact_info', {})
+    contact_info.setdefault('social_links', {
+        'facebook': 'https://www.facebook.com/trachetravel/',
+        'instagram': 'https://www.instagram.com/trache_travel_services/',
+        'tiktok': 'https://www.tiktok.com/@trachetravel.services'
+    })
     return data
 
 def save_data(data):
@@ -159,7 +174,9 @@ def contact_form():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form['username'] == ADMIN_USERNAME and request.form['password'] == ADMIN_PASSWORD:
+        username = request.form['username']
+        password = request.form['password']
+        if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
             session['logged_in'] = True
             return redirect(url_for('admin'))
         else:
@@ -265,11 +282,17 @@ def move_destination_down(index):
 def update_site_info():
     site_data = load_data()
     site_data['company_name'] = request.form.get('company_name', site_data.get('company_name', '')).strip() or site_data.get('company_name', '')
+    site_data['tagline'] = request.form.get('tagline', site_data.get('tagline', '')).strip() or site_data.get('tagline', '')
     contact = site_data.get('contact_info', {})
     contact['telephone'] = request.form.get('telephone', contact.get('telephone', '')).strip()
     contact['email'] = request.form.get('email', contact.get('email', '')).strip()
     contact['adresse'] = request.form.get('adresse', contact.get('adresse', '')).strip()
     contact['horaires'] = request.form.get('horaires', contact.get('horaires', '')).strip()
+    socials = contact.get('social_links', {})
+    socials['facebook'] = request.form.get('facebook', socials.get('facebook', '')).strip()
+    socials['instagram'] = request.form.get('instagram', socials.get('instagram', '')).strip()
+    socials['tiktok'] = request.form.get('tiktok', socials.get('tiktok', '')).strip()
+    contact['social_links'] = socials
     site_data['contact_info'] = contact
     save_data(site_data)
     flash('Informations du site mises À jour.')

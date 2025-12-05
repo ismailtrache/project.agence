@@ -21,10 +21,14 @@
         <h2>Informations du site</h2>
         <form action="{{ url_for('update_site_info') }}" method="post" class="card">
             <div class="form-group"><label for="company_name">Nom de l'agence</label><input type="text" id="company_name" name="company_name" value="{{ data.company_name }}" required></div>
+            <div class="form-group"><label for="tagline">Slogan</label><input type="text" id="tagline" name="tagline" value="{{ data.tagline }}" required></div>
             <div class="form-group"><label for="telephone">Téléphone</label><input type="text" id="telephone" name="telephone" value="{{ data.contact_info.telephone }}" required></div>
             <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" value="{{ data.contact_info.email }}" required></div>
             <div class="form-group"><label for="adresse">Adresse</label><textarea id="adresse" name="adresse" rows="2" required>{{ data.contact_info.adresse }}</textarea></div>
             <div class="form-group"><label for="horaires">Horaires</label><input type="text" id="horaires" name="horaires" value="{{ data.contact_info.horaires }}" required></div>
+            <div class="form-group"><label for="facebook">Facebook</label><input type="url" id="facebook" name="facebook" value="{{ data.contact_info.social_links.facebook }}"></div>
+            <div class="form-group"><label for="instagram">Instagram</label><input type="url" id="instagram" name="instagram" value="{{ data.contact_info.social_links.instagram }}"></div>
+            <div class="form-group"><label for="tiktok">TikTok</label><input type="url" id="tiktok" name="tiktok" value="{{ data.contact_info.social_links.tiktok }}"></div>
             <button type="submit" class="btn-submit">Mettre à jour</button>
         </form>
     </div>

@@ -79,8 +79,26 @@
     </main>
     <footer>
         <div class="footer-content">
-            <div class="footer-section"><h3>{{ data.company_name }}</h3><p>Votre partenaire pour des voyages inoubliables.</p></div>
-            <div class="footer-section"><h3>Contact</h3><p><i class="fas fa-phone"></i> {{ data.contact_info.telephone }}</p><p><i class="fas fa-envelope"></i> {{ data.contact_info.email }}</p></div>
+            <div class="footer-section">
+                <h3>{{ data.company_name }}</h3>
+                <p>{{ data.tagline }}</p>
+                <div style="display:flex; gap:16px; margin-top:0.75rem; align-items:center;">
+                    <a href="{{ data.contact_info.social_links.facebook }}" target="_blank" rel="noopener" aria-label="Facebook" style="color:white; font-size:1.5rem;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="{{ data.contact_info.social_links.instagram }}" target="_blank" rel="noopener" aria-label="Instagram" style="color:white; font-size:1.5rem;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="{{ data.contact_info.social_links.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok" style="color:white; font-size:1.5rem;">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-phone"></i> {{ data.contact_info.telephone }}</p>
+                <p><i class="fas fa-envelope"></i> {{ data.contact_info.email }}</p>
+            </div>
             <div class="footer-section"><h3>Liens Rapides</h3><a href="{{ url_for('services') }}">Services</a><a href="{{ url_for('destinations') }}">Destinations</a><a href="{{ url_for('contact') }}">Contact</a></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2024 {{ data.company_name }}. Tous droits réservés.</p></div>
