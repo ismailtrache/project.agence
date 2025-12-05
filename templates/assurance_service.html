@@ -37,42 +37,38 @@
             l’hospitalisation, le rapatriement, la perte de bagages et bien plus encore.
         </p>
 
-        <h3>Tarifs Individuels (approx.)</h3>
-        <table>
-            <tr>
-                <th>Durée</th><th>Enfant</th><th>Adulte (12–60 ans)</th><th>60–64 ans</th>
-                <th>65–69 ans</th><th>70–74 ans</th><th>75–79 ans</th><th>80–85 ans</th>
-            </tr>
-            <tr><td>8 jours</td><td>1700 DZD</td><td>2300 DZD</td><td>2300 DZD</td><td>2500 DZD</td><td>2700 DZD</td><td>3200 DZD</td><td>4000 DZD</td></tr>
-            <tr><td>10 jours</td><td>1700 DZD</td><td>2400 DZD</td><td>2500 DZD</td><td>2700 DZD</td><td>3000 DZD</td><td>3500 DZD</td><td>4500 DZD</td></tr>
-            <tr><td>15 jours</td><td>1900 DZD</td><td>2700 DZD</td><td>2800 DZD</td><td>3100 DZD</td><td>3500 DZD</td><td>4100 DZD</td><td>5500 DZD</td></tr>
-            <tr><td>30 jours</td><td>2200 DZD</td><td>3300 DZD</td><td>3400 DZD</td><td>3800 DZD</td><td>4300 DZD</td><td>5200 DZD</td><td>7000 DZD</td></tr>
-            <tr><td>60 jours</td><td>2900 DZD</td><td>4700 DZD</td><td>4700 DZD</td><td>5500 DZD</td><td>6300 DZD</td><td>7900 DZD</td><td>11100 DZD</td></tr>
-            <tr><td>90 jours</td><td>3100 DZD</td><td>5200 DZD</td><td>5300 DZD</td><td>6200 DZD</td><td>7200 DZD</td><td>9000 DZD</td><td>12700 DZD</td></tr>
-            <tr><td>6 mois</td><td>5200 DZD</td><td>9600 DZD</td><td>9800 DZD</td><td>11700 DZD</td><td>13600 DZD</td><td>17400 DZD</td><td>25000 DZD</td></tr>
-            <tr><td>1 an</td><td>5800 DZD</td><td>10600 DZD</td><td>10900 DZD</td><td>12800 DZD</td><td>14800 DZD</td><td>18800 DZD</td><td>26800 DZD</td></tr>
-        </table>
+        {% if data.assurance_tables_html %}
+            {{ data.assurance_tables_html|safe }}
+        {% else %}
+            <h3>Tarifs Individuels (approx.)</h3>
+            <table>
+                <tr>
+                    <th>Dur?e</th><th>Enfant</th><th>Adulte (12-60 ans)</th><th>60-64 ans</th>
+                    <th>65-69 ans</th><th>70-74 ans</th><th>75-79 ans</th><th>80-85 ans</th>
+                </tr>
+                <tr><td>8 jours</td><td>1700 DZD</td><td>2300 DZD</td><td>2300 DZD</td><td>2500 DZD</td><td>2700 DZD</td><td>3200 DZD</td><td>4000 DZD</td></tr>
+                <tr><td>10 jours</td><td>1700 DZD</td><td>2400 DZD</td><td>2500 DZD</td><td>2700 DZD</td><td>3000 DZD</td><td>3500 DZD</td><td>4500 DZD</td></tr>
+                <tr><td>15 jours</td><td>1900 DZD</td><td>2700 DZD</td><td>2800 DZD</td><td>3100 DZD</td><td>3500 DZD</td><td>4100 DZD</td><td>5500 DZD</td></tr>
+                <tr><td>30 jours</td><td>2200 DZD</td><td>3300 DZD</td><td>3400 DZD</td><td>3800 DZD</td><td>4300 DZD</td><td>5200 DZD</td><td>7000 DZD</td></tr>
+                <tr><td>60 jours</td><td>2900 DZD</td><td>4700 DZD</td><td>4700 DZD</td><td>5500 DZD</td><td>6300 DZD</td><td>7900 DZD</td><td>11100 DZD</td></tr>
+                <tr><td>90 jours</td><td>3100 DZD</td><td>5200 DZD</td><td>5300 DZD</td><td>6200 DZD</td><td>7200 DZD</td><td>9000 DZD</td><td>12700 DZD</td></tr>
+                <tr><td>6 mois</td><td>5200 DZD</td><td>9600 DZD</td><td>9800 DZD</td><td>11700 DZD</td><td>13600 DZD</td><td>17400 DZD</td><td>25000 DZD</td></tr>
+                <tr><td>1 an</td><td>5800 DZD</td><td>10600 DZD</td><td>10900 DZD</td><td>12800 DZD</td><td>14800 DZD</td><td>18800 DZD</td><td>26800 DZD</td></tr>
+            </table>
 
-        <h3 style="margin-top:2rem;">Tarifs Famille (approx.)</h3>
-        <table>
-            <tr>
-                <th>Durée</th><th>2 pers.</th><th>3 pers.</th><th>4 pers.</th><th>5 pers.</th><th>6 pers.</th>
-            </tr>
-            <tr><td>15 jours</td><td>4500 DZD</td><td>6100 DZD</td><td>8300 DZD</td><td>10000 DZD</td><td>11900 DZD</td></tr>
-            <tr><td>30 jours</td><td>5400 DZD</td><td>6800 DZD</td><td>9200 DZD</td><td>11200 DZD</td><td>13200 DZD</td></tr>
-            <tr><td>3 mois</td><td>9200 DZD</td><td>15200 DZD</td><td>19900 DZD</td><td>24500 DZD</td><td>29300 DZD</td></tr>
-            <tr><td>6 mois</td><td>14600 DZD</td><td>15500 DZD</td><td>28000 DZD</td><td>34700 DZD</td><td>41600 DZD</td></tr>
-            <tr><td>1 an</td><td>16000 DZD</td><td>20700 DZD</td><td>31600 DZD</td><td>39300 DZD</td><td>47200 DZD</td></tr>
-        </table>
+            <h3 style="margin-top:2rem;">Tarifs Famille (approx.)</h3>
+            <table>
+                <tr>
+                    <th>Dur?e</th><th>2 pers.</th><th>3 pers.</th><th>4 pers.</th><th>5 pers.</th><th>6 pers.</th>
+                </tr>
+                <tr><td>15 jours</td><td>4500 DZD</td><td>6100 DZD</td><td>8300 DZD</td><td>10000 DZD</td><td>11900 DZD</td></tr>
+                <tr><td>30 jours</td><td>5400 DZD</td><td>6800 DZD</td><td>9200 DZD</td><td>11200 DZD</td><td>13200 DZD</td></tr>
+                <tr><td>3 mois</td><td>9200 DZD</td><td>15200 DZD</td><td>19900 DZD</td><td>24500 DZD</td><td>29300 DZD</td></tr>
+                <tr><td>6 mois</td><td>14600 DZD</td><td>15500 DZD</td><td>28000 DZD</td><td>34700 DZD</td><td>41600 DZD</td></tr>
+                <tr><td>1 an</td><td>16000 DZD</td><td>20700 DZD</td><td>31600 DZD</td><td>39300 DZD</td><td>47200 DZD</td></tr>
+            </table>
+        {% endif %}
 
-        <p class="note">⚠️ Les prix affichés sont approximatifs et peuvent varier selon l’âge, la destination et la durée.</p>
-
-        <!-- Bouton aligné avec le style du site -->
-        <div style="text-align:center; margin-top:2rem;">
-            <a href="{{ url_for('contact') }}" class="btn-submit">
-                <i class="fas fa-envelope"></i> Demander un Devis Personnalisé
-            </a>
         </div>
-    </div>
 </section>
 {% endblock %}

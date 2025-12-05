@@ -35,6 +35,12 @@
     ],
     "destinations": [
         {
+            "nom": "Guangzhou, Chine",
+            "description": "Mégapole moderne et dynamique, cœur du commerce et de la gastronomie cantonaise.",
+            "prix": "€850",
+            "image": "uploads/destinations/guangzhou.jpg"
+        },
+        {
             "nom": "Paris, France",
             "description": "La ville lumière et ses monuments emblématiques.",
             "prix": "€599",
@@ -107,12 +113,6 @@
             "image": "uploads/destinations/SharmElSheikh.jpg"
         },
         {
-            "nom": "Guangzhou, Chine",
-            "description": "Mégapole moderne et dynamique, cœur du commerce et de la gastronomie cantonaise.",
-            "prix": "€850",
-            "image": "uploads/destinations/guangzhou.jpg"
-        },
-        {
             "nom": "Toronto, Canada",
             "description": "La métropole cosmopolite du Canada, avec sa skyline iconique et sa scène culturelle vibrante.",
             "prix": "€720",
@@ -123,6 +123,12 @@
             "description": "Entre mer et histoire, Mostaganem séduit par ses plages dorées et son âme andalouse.",
             "prix": "€500",
             "image": "uploads/destinations/Mostaganem.jpg"
+        },
+        {
+            "nom": "Istanbul, Turquie",
+            "description": "Ville unique entre deux continents, riche en histoire, mosquées majestueuses et culture vivante.",
+            "prix": "€690",
+            "image": "uploads/destinations/istanbul.jpg"
         }
     ],
     "contact_info": {
@@ -147,5 +153,132 @@
             "description": "Explorez le monde avec nos offres exclusives.",
             "icon": "fa-globe-americas"
         }
-    ]
+    ],
+    "assurance_tables_html": "<table>\r\n                <tr>\r\n                    <th>Dur?e</th><th>Enfant</th><th>Adulte (12-60 ans)</th><th>60-64 ans</th>\r\n                    <th>65-69 ans</th><th>70-74 ans</th><th>75-79 ans</th><th>80-85 ans</th>\r\n                </tr>\r\n                <tr><td>8 jours</td><td>1700 DZD</td><td>2300 DZD</td><td>2300 DZD</td><td>2500 DZD</td><td>2700 DZD</td><td>3200 DZD</td><td>4000 DZD</td></tr>\r\n                <tr><td>10 jours</td><td>1700 DZD</td><td>2400 DZD</td><td>2500 DZD</td><td>2700 DZD</td><td>3000 DZD</td><td>3500 DZD</td><td>4500 DZD</td></tr>\r\n                <tr><td>15 jours</td><td>1900 DZD</td><td>2700 DZD</td><td>2800 DZD</td><td>3100 DZD</td><td>3500 DZD</td><td>4100 DZD</td><td>5500 DZD</td></tr>\r\n                <tr><td>30 jours</td><td>2200 DZD</td><td>3300 DZD</td><td>3400 DZD</td><td>3800 DZD</td><td>4300 DZD</td><td>5200 DZD</td><td>7000 DZD</td></tr>\r\n                <tr><td>60 jours</td><td>2900 DZD</td><td>4700 DZD</td><td>4700 DZD</td><td>5500 DZD</td><td>6300 DZD</td><td>7900 DZD</td><td>11100 DZD</td></tr>\r\n                <tr><td>90 jours</td><td>3100 DZD</td><td>5200 DZD</td><td>5300 DZD</td><td>6200 DZD</td><td>7200 DZD</td><td>9000 DZD</td><td>12700 DZD</td></tr>\r\n                <tr><td>6 mois</td><td>5200 DZD</td><td>9600 DZD</td><td>9800 DZD</td><td>11700 DZD</td><td>13600 DZD</td><td>17400 DZD</td><td>25000 DZD</td></tr>\r\n                <tr><td>1 an</td><td>5800 DZD</td><td>10600 DZD</td><td>10900 DZD</td><td>12800 DZD</td><td>14800 DZD</td><td>18800 DZD</td><td>26800 DZD</td></tr>\r\n            </table>",
+    "visa_tables_html": "<table class=\"visa-table\">\r\n            <thead>\r\n                <tr>\r\n                    <th>Destination</th>\r\n                    <th>Durée</th>\r\n                    <th>Délai</th>\r\n                    <th>Tarif</th>\r\n                    <th>Documents</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/eg.png\" alt=\"Égypte\" class=\"country-flag\">\r\n                            <span>Égypte</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>3 jours</td>\r\n                    <td>Immédiat</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        2,500 DZD\r\n                    </td>\r\n                    <td>Passeport + Billet</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/qa.png\" alt=\"Qatar\" class=\"country-flag\">\r\n                            <span>Qatar</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1 mois</td>\r\n                    <td>3 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        8,500 DZD\r\n                    </td>\r\n                    <td>Passeport + Photo</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/jo.png\" alt=\"Jordanie\" class=\"country-flag\">\r\n                            <span>Jordanie</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1-3 mois</td>\r\n                    <td>24h</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        1,700 DZD\r\n                    </td>\r\n                    <td>Passeport + Photo + Acte naissance</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/ae.png\" alt=\"Émirats\" class=\"country-flag\">\r\n                            <span>Dubaï (EAU)</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1 mois</td>\r\n                    <td>3-4 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        10,000 DZD\r\n                    </td>\r\n                    <td>Passeport + Photo + Documents</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/tr.png\" alt=\"Turquie\" class=\"country-flag\">\r\n                            <span>Turquie</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>Variable</td>\r\n                    <td>24h</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        15,500 DZD\r\n                    </td>\r\n                    <td>Passeport + Visa Schengen</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/th.png\" alt=\"Thaïlande\" class=\"country-flag\">\r\n                            <span>Thaïlande</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1 mois</td>\r\n                    <td>30 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        14,000 DZD\r\n                    </td>\r\n                    <td>Passeport + Résidence FR</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n\r\n      \r\n <table class=\"visa-table\">\r\n            <thead>\r\n                <tr>\r\n                    <th>Destination</th>\r\n                    <th>Durée</th>\r\n                    <th>Délai</th>\r\n                    <th>Tarif</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/om.png\" alt=\"Oman\" class=\"country-flag\">\r\n                            <span>Sultanat d'Oman</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>10 jours / 1 mois</td>\r\n                    <td>3-7 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        11,000 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/am.png\" alt=\"Arménie\" class=\"country-flag\">\r\n                            <span>Arménie</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>21 jours / 3 mois</td>\r\n                    <td>10 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        4,500 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/sa.png\" alt=\"Arabie Saoudite\" class=\"country-flag\">\r\n                            <span>Arabie Saoudite</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>90 jours</td>\r\n                    <td>24h</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        33,000 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/cn.png\" alt=\"Chine\" class=\"country-flag\">\r\n                            <span>Chine</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>Variable</td>\r\n                    <td>10 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        11,000 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/sg.png\" alt=\"Singapour\" class=\"country-flag\">\r\n                            <span>Singapour</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>30 jours</td>\r\n                    <td>15 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        32,000 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/id.png\" alt=\"Indonésie\" class=\"country-flag\">\r\n                            <span>Indonésie</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>60 jours</td>\r\n                    <td>6-10 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        28,000 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/vn.png\" alt=\"Vietnam\" class=\"country-flag\">\r\n                            <span>Vietnam</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>30-90 jours</td>\r\n                    <td>14 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        13,000 DZD\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n\r\n\r\n\r\n       \r\n <table class=\"visa-table\">\r\n            <thead>\r\n                <tr>\r\n                    <th>Destination</th>\r\n                    <th>Durée</th>\r\n                    <th>Délai</th>\r\n                    <th>Tarif</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/tz.png\" alt=\"Tanzanie\" class=\"country-flag\">\r\n                            <span>Tanzanie (Zanzibar)</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1 mois</td>\r\n                    <td>6-10 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        15,000 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/ke.png\" alt=\"Kenya\" class=\"country-flag\">\r\n                            <span>Kenya</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1 mois / 90 jours</td>\r\n                    <td>8-10 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        14,000 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/et.png\" alt=\"Éthiopie\" class=\"country-flag\">\r\n                            <span>Éthiopie</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1 mois</td>\r\n                    <td>7 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        22,500 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/cm.png\" alt=\"Cameroun\" class=\"country-flag\">\r\n                            <span>Cameroun</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>90 jours</td>\r\n                    <td>10 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        55,000 DZD\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/ga.png\" alt=\"Gabon\" class=\"country-flag\">\r\n                            <span>Gabon</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1-3 mois</td>\r\n                    <td>5 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        23,500 DZD\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n\r\n\r\n\r\n\r\n        <table class=\"visa-table\">\r\n            <thead>\r\n                <tr>\r\n                    <th>Destination</th>\r\n                    <th>Durée</th>\r\n                    <th>Délai</th>\r\n                    <th>Tarif</th>\r\n                    <th>Note</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/ru.png\" alt=\"Russie\" class=\"country-flag\">\r\n                            <span>Russie</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1 mois</td>\r\n                    <td>Max 15 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        64,000 DZD\r\n                    </td>\r\n                    <td>Dépôt obligatoire</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/jp.png\" alt=\"Japon\" class=\"country-flag\">\r\n                            <span>Japon</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1 mois</td>\r\n                    <td>10-15 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        11,000 DZD\r\n                    </td>\r\n                    <td>Dépôt obligatoire</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/in.png\" alt=\"Inde\" class=\"country-flag\">\r\n                            <span>Inde</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>1 mois</td>\r\n                    <td>5 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        5,000 DZD\r\n                    </td>\r\n                    <td>Dépôt obligatoire</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/kr.png\" alt=\"Corée du Sud\" class=\"country-flag\">\r\n                            <span>Corée du Sud</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>Variable</td>\r\n                    <td>5 jours</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        9,000 DZD\r\n                    </td>\r\n                    <td>Dépôt obligatoire</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/mx.png\" alt=\"Mexique\" class=\"country-flag\">\r\n                            <span>Mexique</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>30-90 jours</td>\r\n                    <td>Selon RDV</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        12,000 DZD\r\n                    </td>\r\n                    <td>Dépôt obligatoire</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/br.png\" alt=\"Brésil\" class=\"country-flag\">\r\n                            <span>Brésil</span>\r\n                        </div>\r\n                    </td>\r\n                    <td>30-90 jours</td>\r\n                    <td>Selon RDV</td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        12,000 DZD\r\n                    </td>\r\n                    <td>Dépôt obligatoire</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n\r\n        <h3>Visas Destinations Majeures</h3>\r\n        <table class=\"visa-table\">\r\n            <thead>\r\n                <tr>\r\n                    <th>Destination</th>\r\n                    <th>Type</th>\r\n                    <th>Tarif Première Demande</th>\r\n                    <th>Tarif Renouvellement</th>\r\n                    <th>Services Inclus</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/ca.png\" alt=\"Canada\" class=\"country-flag\">\r\n                            <span>Canada</span>\r\n                        </div>\r\n                    </td>\r\n                    <td><span class=\"visa-type\">Tourisme</span></td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        41,000 DZD\r\n                    </td>\r\n                    <td class=\"price-cell\">30,000 DZD</td>\r\n                    <td>Dossier complet + RDV</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/us.png\" alt=\"USA\" class=\"country-flag\">\r\n                            <span>États-Unis</span>\r\n                        </div>\r\n                    </td>\r\n                    <td><span class=\"visa-type\">Tourisme</span></td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        20,000 DZD\r\n                    </td>\r\n                    <td class=\"price-cell\">10,000 DZD</td>\r\n                    <td>DS160 + RDV</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/gb.png\" alt=\"UK\" class=\"country-flag\">\r\n                            <span>Royaume-Uni</span>\r\n                        </div>\r\n                    </td>\r\n                    <td><span class=\"visa-type\">Tourisme</span></td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        48,000 DZD\r\n                    </td>\r\n                    <td class=\"price-cell\">48,000 DZD</td>\r\n                    <td>Dossier anglais + Paiement</td>\r\n                </tr>\r\n                <tr>\r\n                    <td>\r\n                        <div class=\"country-cell\">\r\n                            <img src=\"https://flagcdn.com/w40/au.png\" alt=\"Australie\" class=\"country-flag\">\r\n                            <span>Australie</span>\r\n                        </div>\r\n                    </td>\r\n                    <td><span class=\"visa-type\">Tourisme</span></td>\r\n                    <td class=\"price-cell\">\r\n                        <span class=\"price-prefix\">À partir de</span>\r\n                        44,000 DZD\r\n                    </td>\r\n                    <td class=\"price-cell\">44,000 DZD</td>\r\n                    <td>Dossier complet</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>",
+    "assurance_individuel": [
+        {
+            "duree": "8 jours",
+            "enfant": "1700 DZD",
+            "adulte": "2300 DZD",
+            "60_64": "2300 DZD",
+            "65_69": "2500 DZD",
+            "70_74": "2700 DZD",
+            "75_79": "3200 DZD",
+            "80_85": "4000 DZD"
+        },
+        {
+            "duree": "10 jours",
+            "enfant": "1700 DZD",
+            "adulte": "2400 DZD",
+            "60_64": "2500 DZD",
+            "65_69": "2700 DZD",
+            "70_74": "3000 DZD",
+            "75_79": "3500 DZD",
+            "80_85": "4500 DZD"
+        },
+        {
+            "duree": "15 jours",
+            "enfant": "1900 DZD",
+            "adulte": "2700 DZD",
+            "60_64": "2800 DZD",
+            "65_69": "3100 DZD",
+            "70_74": "3500 DZD",
+            "75_79": "4100 DZD",
+            "80_85": "5500 DZD"
+        },
+        {
+            "duree": "30 jours",
+            "enfant": "2200 DZD",
+            "adulte": "3300 DZD",
+            "60_64": "3400 DZD",
+            "65_69": "3800 DZD",
+            "70_74": "4300 DZD",
+            "75_79": "5200 DZD",
+            "80_85": "7000 DZD"
+        },
+        {
+            "duree": "60 jours",
+            "enfant": "2900 DZD",
+            "adulte": "4700 DZD",
+            "60_64": "4700 DZD",
+            "65_69": "5500 DZD",
+            "70_74": "6300 DZD",
+            "75_79": "7900 DZD",
+            "80_85": "11100 DZD"
+        },
+        {
+            "duree": "90 jours",
+            "enfant": "3100 DZD",
+            "adulte": "5200 DZD",
+            "60_64": "5300 DZD",
+            "65_69": "6200 DZD",
+            "70_74": "7200 DZD",
+            "75_79": "9000 DZD",
+            "80_85": "12700 DZD"
+        },
+        {
+            "duree": "6 mois",
+            "enfant": "5200 DZD",
+            "adulte": "9600 DZD",
+            "60_64": "9800 DZD",
+            "65_69": "11700 DZD",
+            "70_74": "13600 DZD",
+            "75_79": "17400 DZD",
+            "80_85": "25000 DZD"
+        },
+        {
+            "duree": "1 an",
+            "enfant": "5800 DZD",
+            "adulte": "10600 DZD",
+            "60_64": "10900 DZD",
+            "65_69": "12800 DZD",
+            "70_74": "14800 DZD",
+            "75_79": "18800 DZD",
+            "80_85": "26800 DZD"
+        }
+    ],
+    "assurance_famille": [
+        {
+            "duree": "15 jours",
+            "p2": "4500 DZD",
+            "p3": "6100 DZD",
+            "p4": "8300 DZD",
+            "p5": "10000 DZD",
+            "p6": "11900 DZD"
+        },
+        {
+            "duree": "30 jours",
+            "p2": "5400 DZD",
+            "p3": "6800 DZD",
+            "p4": "9200 DZD",
+            "p5": "11200 DZD",
+            "p6": "13200 DZD"
+        },
+        {
+            "duree": "3 mois",
+            "p2": "9200 DZD",
+            "p3": "15200 DZD",
+            "p4": "19900 DZD",
+            "p5": "24500 DZD",
+            "p6": "29300 DZD"
+        },
+        {
+            "duree": "6 mois",
+            "p2": "14600 DZD",
+            "p3": "15500 DZD",
+            "p4": "28000 DZD",
+            "p5": "34700 DZD",
+            "p6": "41600 DZD"
+        },
+        {
+            "duree": "1 an",
+            "p2": "16000 DZD",
+            "p3": "20700 DZD",
+            "p4": "31600 DZD",
+            "p5": "39300 DZD",
+            "p6": "47200 DZD"
+        }
+    ],
+    "visa_rows": []
 }

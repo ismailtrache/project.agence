@@ -115,6 +115,9 @@
             </ul>
         </div>
 
+{% if data.visa_tables_html %}
+            {{ data.visa_tables_html|safe }}
+        {% else %}
 <!-- VISAS ÉLECTRONIQUES -->
         <h3>Visas Électroniques</h3>
         <table class="visa-table">
@@ -605,20 +608,7 @@
             celles-ci seront automatiquement facturées à l'agence.
         </div>
 
-<div>
-    <p>
-        <strong>Information importante :</strong> Les prix affichés sont indicatifs et peuvent varier selon la nationalité et le type de demande. 
-        Les délais peuvent être prolongés en cas de forte demande. 
-        <br><br>
-        <strong>Pour un devis précis et personnalisé, contactez-nous directement.</strong>
-    </p>
-    <div style="text-align: center; margin-top: 1rem;">
-        <a href="{{ url_for('contact') }}" class="btn-submit">
-            <i class="fas fa-envelope"></i> Demander un Devis Personnalisé
-        </a>
-    </div>
 </div>
-
-    </div>
 </section>
+        {% endif %}
 {% endblock %}

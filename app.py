@@ -72,12 +72,38 @@ def load_data():
                 {'title': 'Meilleurs Prix Garantis', 'description': 'Nous négocions les meilleurs tarifs pour vous.', 'icon': 'fa-tags'},
                 {'title': 'Support Client 24/7', 'description': 'Notre équipe est disponible à tout moment.', 'icon': 'fa-headset'},
                 {'title': 'Destinations Mondiales', 'description': 'Explorez le monde avec nos offres exclusives.', 'icon': 'fa-globe-americas'}
-            ]
+            ],
+            'assurance_individuel': [],
+            'assurance_famille': [],
+            'visa_rows': [],
+            'assurance_tables_html': '',
+            'visa_tables_html': ''
         }
         with open(DATA_FILE, 'w', encoding='utf-8') as f:
             json.dump(initial_data, f, indent=4, ensure_ascii=False)
     with open(DATA_FILE, 'r', encoding='utf-8') as f:
-        return json.load(f)
+        data = json.load(f)
+    data.setdefault('assurance_tables_html', '')
+    data.setdefault('visa_tables_html', '')
+    data.setdefault('assurance_individuel', [
+        {"duree": "8 jours", "enfant": "1700 DZD", "adulte": "2300 DZD", "60_64": "2300 DZD", "65_69": "2500 DZD", "70_74": "2700 DZD", "75_79": "3200 DZD", "80_85": "4000 DZD"},
+        {"duree": "10 jours", "enfant": "1700 DZD", "adulte": "2400 DZD", "60_64": "2500 DZD", "65_69": "2700 DZD", "70_74": "3000 DZD", "75_79": "3500 DZD", "80_85": "4500 DZD"},
+        {"duree": "15 jours", "enfant": "1900 DZD", "adulte": "2700 DZD", "60_64": "2800 DZD", "65_69": "3100 DZD", "70_74": "3500 DZD", "75_79": "4100 DZD", "80_85": "5500 DZD"},
+        {"duree": "30 jours", "enfant": "2200 DZD", "adulte": "3300 DZD", "60_64": "3400 DZD", "65_69": "3800 DZD", "70_74": "4300 DZD", "75_79": "5200 DZD", "80_85": "7000 DZD"},
+        {"duree": "60 jours", "enfant": "2900 DZD", "adulte": "4700 DZD", "60_64": "4700 DZD", "65_69": "5500 DZD", "70_74": "6300 DZD", "75_79": "7900 DZD", "80_85": "11100 DZD"},
+        {"duree": "90 jours", "enfant": "3100 DZD", "adulte": "5200 DZD", "60_64": "5300 DZD", "65_69": "6200 DZD", "70_74": "7200 DZD", "75_79": "9000 DZD", "80_85": "12700 DZD"},
+        {"duree": "6 mois", "enfant": "5200 DZD", "adulte": "9600 DZD", "60_64": "9800 DZD", "65_69": "11700 DZD", "70_74": "13600 DZD", "75_79": "17400 DZD", "80_85": "25000 DZD"},
+        {"duree": "1 an", "enfant": "5800 DZD", "adulte": "10600 DZD", "60_64": "10900 DZD", "65_69": "12800 DZD", "70_74": "14800 DZD", "75_79": "18800 DZD", "80_85": "26800 DZD"}
+    ])
+    data.setdefault('assurance_famille', [
+        {"duree": "15 jours", "p2": "4500 DZD", "p3": "6100 DZD", "p4": "8300 DZD", "p5": "10000 DZD", "p6": "11900 DZD"},
+        {"duree": "30 jours", "p2": "5400 DZD", "p3": "6800 DZD", "p4": "9200 DZD", "p5": "11200 DZD", "p6": "13200 DZD"},
+        {"duree": "3 mois", "p2": "9200 DZD", "p3": "15200 DZD", "p4": "19900 DZD", "p5": "24500 DZD", "p6": "29300 DZD"},
+        {"duree": "6 mois", "p2": "14600 DZD", "p3": "15500 DZD", "p4": "28000 DZD", "p5": "34700 DZD", "p6": "41600 DZD"},
+        {"duree": "1 an", "p2": "16000 DZD", "p3": "20700 DZD", "p4": "31600 DZD", "p5": "39300 DZD", "p6": "47200 DZD"}
+    ])
+    data.setdefault('visa_rows', [])
+    return data
 
 def save_data(data):
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
@@ -232,6 +258,208 @@ def move_destination_down(index):
         site_data['destinations'][index], site_data['destinations'][index + 1] = site_data['destinations'][index + 1], site_data['destinations'][index]
         save_data(site_data)
         flash('Ordre des destinations mis à jour.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/site_info', methods=['POST'])
+@login_required
+def update_site_info():
+    site_data = load_data()
+    site_data['company_name'] = request.form.get('company_name', site_data.get('company_name', '')).strip() or site_data.get('company_name', '')
+    contact = site_data.get('contact_info', {})
+    contact['telephone'] = request.form.get('telephone', contact.get('telephone', '')).strip()
+    contact['email'] = request.form.get('email', contact.get('email', '')).strip()
+    contact['adresse'] = request.form.get('adresse', contact.get('adresse', '')).strip()
+    contact['horaires'] = request.form.get('horaires', contact.get('horaires', '')).strip()
+    site_data['contact_info'] = contact
+    save_data(site_data)
+    flash('Informations du site mises À jour.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/service/edit/<int:index>', methods=['POST'])
+@login_required
+def edit_service_entry(index):
+    site_data = load_data()
+    services = site_data.get('services', [])
+    if 0 <= index < len(services):
+        service = services[index]
+        service['nom'] = request.form.get('nom', service.get('nom', '')).strip()
+        service['description'] = request.form.get('description', service.get('description', '')).strip()
+        service['icon'] = request.form.get('icon', service.get('icon', '')).strip()
+        save_data(site_data)
+        flash('Service mis À jour.')
+    else:
+        flash('Service introuvable.', 'danger')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/whyus/edit/<int:index>', methods=['POST'])
+@login_required
+def edit_whyus_entry(index):
+    site_data = load_data()
+    why_us = site_data.get('why_us', [])
+    if 0 <= index < len(why_us):
+        item = why_us[index]
+        item['title'] = request.form.get('title', item.get('title', '')).strip()
+        item['description'] = request.form.get('description', item.get('description', '')).strip()
+        item['icon'] = request.form.get('icon', item.get('icon', '')).strip()
+        save_data(site_data)
+        flash('Bloc \"Pourquoi nous choisir\" mis À jour.')
+    else:
+        flash('Bloc introuvable.', 'danger')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/assurance/html', methods=['POST'])
+@login_required
+def update_assurance_html():
+    site_data = load_data()
+    site_data['assurance_tables_html'] = request.form.get('assurance_tables_html', '').strip()
+    save_data(site_data)
+    flash('Tableaux assurance mis à jour.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/visa/html', methods=['POST'])
+@login_required
+def update_visa_html():
+    site_data = load_data()
+    site_data['visa_tables_html'] = request.form.get('visa_tables_html', '').strip()
+    save_data(site_data)
+    flash('Tableaux visa mis à jour.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/assurance/individuel/edit/<int:index>', methods=['POST'])
+@login_required
+def edit_assurance_individuel(index):
+    site_data = load_data()
+    rows = site_data.get('assurance_individuel', [])
+    if 0 <= index < len(rows):
+        row = rows[index]
+        row['duree'] = request.form.get('duree', row.get('duree', '')).strip()
+        row['enfant'] = request.form.get('enfant', row.get('enfant', '')).strip()
+        row['adulte'] = request.form.get('adulte', row.get('adulte', '')).strip()
+        row['60_64'] = request.form.get('60_64', row.get('60_64', '')).strip()
+        row['65_69'] = request.form.get('65_69', row.get('65_69', '')).strip()
+        row['70_74'] = request.form.get('70_74', row.get('70_74', '')).strip()
+        row['75_79'] = request.form.get('75_79', row.get('75_79', '')).strip()
+        row['80_85'] = request.form.get('80_85', row.get('80_85', '')).strip()
+        save_data(site_data)
+        flash('Ligne assurance (individuel) mise à jour.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/assurance/individuel/add', methods=['POST'])
+@login_required
+def add_assurance_individuel():
+    site_data = load_data()
+    rows = site_data.setdefault('assurance_individuel', [])
+    rows.append({
+        'duree': request.form.get('duree', '').strip(),
+        'enfant': request.form.get('enfant', '').strip(),
+        'adulte': request.form.get('adulte', '').strip(),
+        '60_64': request.form.get('60_64', '').strip(),
+        '65_69': request.form.get('65_69', '').strip(),
+        '70_74': request.form.get('70_74', '').strip(),
+        '75_79': request.form.get('75_79', '').strip(),
+        '80_85': request.form.get('80_85', '').strip(),
+    })
+    save_data(site_data)
+    flash('Ligne assurance (individuel) ajoutée.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/assurance/individuel/delete/<int:index>')
+@login_required
+def delete_assurance_individuel(index):
+    site_data = load_data()
+    rows = site_data.get('assurance_individuel', [])
+    if 0 <= index < len(rows):
+        rows.pop(index)
+        save_data(site_data)
+        flash('Ligne supprimée.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/assurance/famille/edit/<int:index>', methods=['POST'])
+@login_required
+def edit_assurance_famille(index):
+    site_data = load_data()
+    rows = site_data.get('assurance_famille', [])
+    if 0 <= index < len(rows):
+        row = rows[index]
+        row['duree'] = request.form.get('duree', row.get('duree', '')).strip()
+        row['p2'] = request.form.get('p2', row.get('p2', '')).strip()
+        row['p3'] = request.form.get('p3', row.get('p3', '')).strip()
+        row['p4'] = request.form.get('p4', row.get('p4', '')).strip()
+        row['p5'] = request.form.get('p5', row.get('p5', '')).strip()
+        row['p6'] = request.form.get('p6', row.get('p6', '')).strip()
+        save_data(site_data)
+        flash('Ligne assurance famille mise à jour.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/assurance/famille/add', methods=['POST'])
+@login_required
+def add_assurance_famille():
+    site_data = load_data()
+    rows = site_data.setdefault('assurance_famille', [])
+    rows.append({
+        'duree': request.form.get('duree', '').strip(),
+        'p2': request.form.get('p2', '').strip(),
+        'p3': request.form.get('p3', '').strip(),
+        'p4': request.form.get('p4', '').strip(),
+        'p5': request.form.get('p5', '').strip(),
+        'p6': request.form.get('p6', '').strip(),
+    })
+    save_data(site_data)
+    flash('Ligne assurance famille ajoutée.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/assurance/famille/delete/<int:index>')
+@login_required
+def delete_assurance_famille(index):
+    site_data = load_data()
+    rows = site_data.get('assurance_famille', [])
+    if 0 <= index < len(rows):
+        rows.pop(index)
+        save_data(site_data)
+        flash('Ligne supprimée.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/visa/row/edit/<int:index>', methods=['POST'])
+@login_required
+def edit_visa_row(index):
+    site_data = load_data()
+    rows = site_data.get('visa_rows', [])
+    if 0 <= index < len(rows):
+        row = rows[index]
+        for key in ['category', 'destination', 'visa_type', 'duree', 'delai', 'tarif', 'tarif_total', 'docs']:
+            row[key] = request.form.get(key, row.get(key, '')).strip()
+        save_data(site_data)
+        flash('Ligne visa mise à jour.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/visa/row/add', methods=['POST'])
+@login_required
+def add_visa_row():
+    site_data = load_data()
+    rows = site_data.setdefault('visa_rows', [])
+    rows.append({
+        'category': request.form.get('category', '').strip(),
+        'destination': request.form.get('destination', '').strip(),
+        'visa_type': request.form.get('visa_type', '').strip(),
+        'duree': request.form.get('duree', '').strip(),
+        'delai': request.form.get('delai', '').strip(),
+        'tarif': request.form.get('tarif', '').strip(),
+        'tarif_total': request.form.get('tarif_total', '').strip(),
+        'docs': request.form.get('docs', '').strip(),
+    })
+    save_data(site_data)
+    flash('Ligne visa ajoutée.')
+    return redirect(url_for('admin'))
+
+@app.route('/admin/visa/row/delete/<int:index>')
+@login_required
+def delete_visa_row(index):
+    site_data = load_data()
+    rows = site_data.get('visa_rows', [])
+    if 0 <= index < len(rows):
+        rows.pop(index)
+        save_data(site_data)
+        flash('Ligne supprimée.')
     return redirect(url_for('admin'))
 
 @app.route('/service/<service_name>')
@@ -569,7 +797,7 @@ admin_template = '''
 {% extends "base.html" %}
 {% block content %}
 <style>
-    .admin-container { padding: 2rem 1rem; max-width: 900px; margin: 2rem auto; background: #f8f9fa; border-radius: 15px; box-shadow: var(--shadow); }
+    .admin-container { padding: 2rem 1rem; max-width: 1000px; margin: 2rem auto; background: #f8f9fa; border-radius: 15px; box-shadow: var(--shadow); }
     .admin-section { margin-bottom: 3rem; }
     .admin-section h2 { font-size: 1.8rem; color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
     .form-group { margin-bottom: 1rem; }
@@ -581,9 +809,46 @@ admin_template = '''
     .dest-actions a { margin-left: 1rem; text-decoration: none; color: var(--primary); }
     .dest-actions a.delete { color: #e74c3c; }
     .order-arrows a { font-size: 1.2rem; margin-left: 1rem; }
+    .card { border: 1px solid #eee; border-radius: 12px; padding: 1rem; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
 </style>
-<div class="page-header"><h1>Panneau de Contrôle</h1></div>
+<div class="page-header"><h1>Panneau de Contr?le</h1></div>
 <div class="admin-container">
+    <div class="admin-section">
+        <h2>Informations du site</h2>
+        <form action="{{ url_for('update_site_info') }}" method="post" class="card">
+            <div class="form-group"><label for="company_name">Nom de l'agence</label><input type="text" id="company_name" name="company_name" value="{{ data.company_name }}" required></div>
+            <div class="form-group"><label for="telephone">T?l?phone</label><input type="text" id="telephone" name="telephone" value="{{ data.contact_info.telephone }}" required></div>
+            <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" value="{{ data.contact_info.email }}" required></div>
+            <div class="form-group"><label for="adresse">Adresse</label><textarea id="adresse" name="adresse" rows="2" required>{{ data.contact_info.adresse }}</textarea></div>
+            <div class="form-group"><label for="horaires">Horaires</label><input type="text" id="horaires" name="horaires" value="{{ data.contact_info.horaires }}" required></div>
+            <button type="submit" class="btn-submit">Mettre ? jour</button>
+        </form>
+    </div>
+
+    <div class="admin-section">
+        <h2>Services</h2>
+        {% for service in data.services %}
+        <form action="{{ url_for('edit_service_entry', index=loop.index0) }}" method="post" class="card" style="margin-bottom:1.5rem;">
+            <div class="form-group"><label>Nom</label><input type="text" name="nom" value="{{ service.nom }}" required></div>
+            <div class="form-group"><label>Description</label><textarea name="description" rows="2" required>{{ service.description }}</textarea></div>
+            <div class="form-group"><label>Ic?ne (Font Awesome)</label><input type="text" name="icon" value="{{ service.icon }}" required></div>
+            <button type="submit" class="btn-submit">Enregistrer le service</button>
+        </form>
+        {% endfor %}
+    </div>
+
+    <div class="admin-section">
+        <h2>Pourquoi nous choisir</h2>
+        {% for item in data.why_us %}
+        <form action="{{ url_for('edit_whyus_entry', index=loop.index0) }}" method="post" class="card" style="margin-bottom:1.5rem;">
+            <div class="form-group"><label>Titre</label><input type="text" name="title" value="{{ item.title }}" required></div>
+            <div class="form-group"><label>Description</label><textarea name="description" rows="2" required>{{ item.description }}</textarea></div>
+            <div class="form-group"><label>Ic?ne (Font Awesome)</label><input type="text" name="icon" value="{{ item.icon }}" required></div>
+            <button type="submit" class="btn-submit">Enregistrer ce bloc</button>
+        </form>
+        {% endfor %}
+    </div>
+
     <div class="admin-section">
         <h2>Ajouter une Destination</h2>
         <form action="{{ url_for('add_destination') }}" method="post" enctype="multipart/form-data">
@@ -595,7 +860,7 @@ admin_template = '''
         </form>
     </div>
     <div class="admin-section">
-        <h2>Gérer les Destinations</h2>
+        <h2>G?rer les Destinations</h2>
         <ul class="dest-list">
             {% for i in range(data.destinations|length) %}
             <li class="dest-item">
@@ -603,14 +868,14 @@ admin_template = '''
                 <div class="dest-actions">
                     <span class="order-arrows">
                         {% if not loop.first %}
-                        <a href="{{ url_for('move_destination_up', index=i) }}">⬆️</a>
+                        <a href="{{ url_for('move_destination_up', index=i) }}">??</a>
                         {% endif %}
                         {% if not loop.last %}
-                        <a href="{{ url_for('move_destination_down', index=i) }}">⬇️</a>
+                        <a href="{{ url_for('move_destination_down', index=i) }}">??</a>
                         {% endif %}
                     </span>
                     <a href="{{ url_for('edit_destination', index=i) }}">Modifier</a>
-                    <a href="{{ url_for('delete_destination', index=i) }}" onclick="return confirm('Êtes-vous sûr ?')" class="delete">Supprimer</a>
+                    <a href="{{ url_for('delete_destination', index=i) }}" onclick="return confirm('?tes-vous s?r ?')" class="delete">Supprimer</a>
                 </div>
             </li>
             {% endfor %}
@@ -693,17 +958,28 @@ login_template = '''
 '''
 
 def write_templates():
-    with open(os.path.join(templates_dir, 'base.html'), 'w', encoding='utf-8') as f: f.write(base_template)
-    with open(os.path.join(templates_dir, 'index.html'), 'w', encoding='utf-8') as f: f.write(index_template)
-    with open(os.path.join(templates_dir, 'services.html'), 'w', encoding='utf-8') as f: f.write(services_template)
-    with open(os.path.join(templates_dir, 'destinations.html'), 'w', encoding='utf-8') as f: f.write(destinations_template)
-    with open(os.path.join(templates_dir, 'contact.html'), 'w', encoding='utf-8') as f: f.write(contact_template)
-    with open(os.path.join(templates_dir, 'admin.html'), 'w', encoding='utf-8') as f: f.write(admin_template)
-    with open(os.path.join(templates_dir, 'edit_destination.html'), 'w', encoding='utf-8') as f: f.write(edit_destination_template)
-    with open(os.path.join(templates_dir, 'login.html'), 'w', encoding='utf-8') as f: f.write(login_template)
+    files = {
+        'base.html': base_template,
+        'index.html': index_template,
+        'services.html': services_template,
+        'destinations.html': destinations_template,
+        'contact.html': contact_template,
+        'admin.html': admin_template,
+        'edit_destination.html': edit_destination_template,
+        'login.html': login_template,
+    }
+    for name, content in files.items():
+        path = os.path.join(templates_dir, name)
+        if not os.path.exists(path):
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(content)
 
 if __name__ == '__main__':
     load_data()
     write_templates()
-    print("🚀 Démarrage du serveur Flask...")
+
+
+    load_data()
+    write_templates()
+    print("Démarrage du serveur Flask...")
     app.run(debug=True)

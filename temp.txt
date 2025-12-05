@@ -1,3 +1,4 @@
+﻿
 {% extends "base.html" %}
 {% block title %}{{ super() }} - Nos Services{% endblock %}
 {% block content %}
@@ -12,15 +13,11 @@
 </div>
 <section class="section">
     <div class="container">
-        <h2 class="section-title">Une Gamme Complète Pour Votre Confort</h2>
-        <p class="section-subtitle">De la planification à la réalisation de votre voyage, nous couvrons tous les aspects pour vous garantir une expérience exceptionnelle et sans souci.</p>
+        <h2 class="section-title">Une Gamme ComplÃ¨te Pour Votre Confort</h2>
+        <p class="section-subtitle">De la planification Ã  la rÃ©alisation de votre voyage, nous couvrons tous les aspects pour vous garantir une expÃ©rience exceptionnelle et sans souci.</p>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
             {% for service in data.services %}
-            {% set link = url_for('contact') %}
-            {% if service.nom in ['Visa & Documentation', 'Assurance Voyage', 'Hôtels de Prestige'] %}
-                {% set link = url_for('service_detail', service_name=service.nom) %}
-            {% endif %}
-            <a href="{{ link }}" class="quote-link" style="text-decoration: none; color: inherit;">
+            <a href="{{ url_for('contact') }}" class="quote-link" style="text-decoration: none; color: inherit;">
                 <div class="service-card">
                     <div class="service-icon"><i class="fas {{ service.icon }}"></i></div>
                     <h3>{{ service.nom }}</h3>

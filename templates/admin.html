@@ -1,8 +1,7 @@
-
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 {% block content %}
 <style>
-    .admin-container { padding: 2rem 1rem; max-width: 900px; margin: 2rem auto; background: #f8f9fa; border-radius: 15px; box-shadow: var(--shadow); }
+    .admin-container { padding: 2rem 1rem; max-width: 1000px; margin: 2rem auto; background: #f8f9fa; border-radius: 15px; box-shadow: var(--shadow); }
     .admin-section { margin-bottom: 3rem; }
     .admin-section h2 { font-size: 1.8rem; color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
     .form-group { margin-bottom: 1rem; }
@@ -14,9 +13,68 @@
     .dest-actions a { margin-left: 1rem; text-decoration: none; color: var(--primary); }
     .dest-actions a.delete { color: #e74c3c; }
     .order-arrows a { font-size: 1.2rem; margin-left: 1rem; }
+    .card { border: 1px solid #eee; border-radius: 12px; padding: 1rem; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
 </style>
 <div class="page-header"><h1>Panneau de Contrôle</h1></div>
 <div class="admin-container">
+    <div class="admin-section">
+        <h2>Informations du site</h2>
+        <form action="{{ url_for('update_site_info') }}" method="post" class="card">
+            <div class="form-group"><label for="company_name">Nom de l'agence</label><input type="text" id="company_name" name="company_name" value="{{ data.company_name }}" required></div>
+            <div class="form-group"><label for="telephone">Téléphone</label><input type="text" id="telephone" name="telephone" value="{{ data.contact_info.telephone }}" required></div>
+            <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" value="{{ data.contact_info.email }}" required></div>
+            <div class="form-group"><label for="adresse">Adresse</label><textarea id="adresse" name="adresse" rows="2" required>{{ data.contact_info.adresse }}</textarea></div>
+            <div class="form-group"><label for="horaires">Horaires</label><input type="text" id="horaires" name="horaires" value="{{ data.contact_info.horaires }}" required></div>
+            <button type="submit" class="btn-submit">Mettre à jour</button>
+        </form>
+    </div>
+
+    <div class="admin-section">
+        <h2>Services</h2>
+        {% for service in data.services %}
+        <form action="{{ url_for('edit_service_entry', index=loop.index0) }}" method="post" class="card" style="margin-bottom:1.5rem;">
+            <div class="form-group"><label>Nom</label><input type="text" name="nom" value="{{ service.nom }}" required></div>
+            <div class="form-group"><label>Description</label><textarea name="description" rows="2" required>{{ service.description }}</textarea></div>
+            <div class="form-group"><label>Icône (Font Awesome)</label><input type="text" name="icon" value="{{ service.icon }}" required></div>
+            <button type="submit" class="btn-submit">Enregistrer le service</button>
+        </form>
+        {% endfor %}
+    </div>
+
+    <div class="admin-section">
+        <h2>Pourquoi nous choisir</h2>
+        {% for item in data.why_us %}
+        <form action="{{ url_for('edit_whyus_entry', index=loop.index0) }}" method="post" class="card" style="margin-bottom:1.5rem;">
+            <div class="form-group"><label>Titre</label><input type="text" name="title" value="{{ item.title }}" required></div>
+            <div class="form-group"><label>Description</label><textarea name="description" rows="2" required>{{ item.description }}</textarea></div>
+            <div class="form-group"><label>Icône (Font Awesome)</label><input type="text" name="icon" value="{{ item.icon }}" required></div>
+            <button type="submit" class="btn-submit">Enregistrer ce bloc</button>
+        </form>
+        {% endfor %}
+    </div>
+
+    <div class="admin-section">
+        <h2>Tarifs Assurance (HTML)</h2>
+        <form action="{{ url_for('update_assurance_html') }}" method="post" class="card">
+            <div class="form-group">
+                <label for="assurance_tables_html">Collez ou éditez le tableau (HTML)</label>
+                <textarea id="assurance_tables_html" name="assurance_tables_html" rows="10">{{ data.assurance_tables_html|default('') }}</textarea>
+            </div>
+            <button type="submit" class="btn-submit">Mettre à jour l'assurance</button>
+        </form>
+    </div>
+
+    <div class="admin-section">
+        <h2>Tarifs Visa (HTML)</h2>
+        <form action="{{ url_for('update_visa_html') }}" method="post" class="card">
+            <div class="form-group">
+                <label for="visa_tables_html">Collez ou éditez les tableaux (HTML)</label>
+                <textarea id="visa_tables_html" name="visa_tables_html" rows="12">{{ data.visa_tables_html|default('') }}</textarea>
+            </div>
+            <button type="submit" class="btn-submit">Mettre à jour les visas</button>
+        </form>
+    </div>
+
     <div class="admin-section">
         <h2>Ajouter une Destination</h2>
         <form action="{{ url_for('add_destination') }}" method="post" enctype="multipart/form-data">
