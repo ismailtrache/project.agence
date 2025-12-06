@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 {% block content %}
 <style>
@@ -15,8 +14,8 @@
     <div class="container">
         <h2 class="section-title">Toutes Nos Destinations</h2>
         <p class="section-subtitle">
-            {% if request.args.get('query') %}
-                Résultats de la recherche pour : <strong>{{ request.args.get('query') }}</strong>
+            {% if query %}
+                Résultats de la recherche pour : <strong>{{ query }}</strong>
             {% else %}
                 Des métropoles vibrantes aux plages paradisiaques, trouvez l'inspiration.
             {% endif %}
@@ -32,6 +31,23 @@
             <p>Aucune destination trouvée pour votre recherche.</p>
             {% endfor %}
         </div>
+        {% if services_results %}
+        <div style="margin-top:3rem;">
+            <h3 class="section-title" style="font-size:1.5rem;">Services correspondants</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                {% for service in services_results %}
+                <a href="{{ url_for('service_detail', service_name=service.nom) }}" style="text-decoration:none; color:inherit;">
+                    <div class="destination-card" style="height:auto;">
+                        <div class="dest-content" style="position:relative; color:var(--primary); padding:1.5rem;">
+                            <h3 style="color:var(--primary); margin-bottom:0.5rem;">{{ service.nom }}</h3>
+                            <p style="color:var(--text-secondary);">{{ service.description }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
     </div>
 </section>
 {% endblock %}

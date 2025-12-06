@@ -37,7 +37,7 @@
         {
             "nom": "Guangzhou, Chine",
             "description": "Mégapole moderne et dynamique, cœur du commerce et de la gastronomie cantonaise.",
-            "prix": "€850",
+            "prix": "90000 DA",
             "image": "uploads/destinations/guangzhou.jpg"
         },
         {
@@ -135,7 +135,12 @@
         "telephone": "+213 662 90 10 49 / +213 540 62 24 64",
         "email": "trachetravelservice@gmail.com",
         "adresse": "n°8 Rue Adda Ouled Derrer, Lot n°3 Hai Makkari, Oran, Algeria",
-        "horaires": "Dim-Jeu: 9h-18h, Sam: 9h-13h"
+        "horaires": "Dim-Jeu: 9h-18h, Sam: 9h-13h",
+        "social_links": {
+            "facebook": "https://www.facebook.com/trachetravel/",
+            "instagram": "https://www.instagram.com/trache_travel_services/",
+            "tiktok": "https://www.tiktok.com/@trachetravel.services"
+        }
     },
     "why_us": [
         {
@@ -280,5 +285,6 @@
             "p6": "47200 DZD"
         }
     ],
-    "visa_rows": []
+    "visa_rows": [],
+    "tagline": "Votre partenaire pour des voyages inoubliables."
 }

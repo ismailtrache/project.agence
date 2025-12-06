@@ -58,6 +58,42 @@
     </div>
 
     <div class="admin-section">
+        <h2>Messages reçus</h2>
+        {% if messages %}
+        <div class="card" style="overflow-x:auto;">
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:8px;">Date</th>
+                        <th style="text-align:left; padding:8px;">Nom</th>
+                        <th style="text-align:left; padding:8px;">Email</th>
+                        <th style="text-align:left; padding:8px;">Téléphone</th>
+                        <th style="text-align:left; padding:8px;">Message</th>
+                        <th style="text-align:left; padding:8px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in messages %}
+                    <tr style="border-top:1px solid #eee;">
+                        <td style="padding:8px;">{{ msg.Date }}</td>
+                        <td style="padding:8px;">{{ msg.Nom }}</td>
+                        <td style="padding:8px;">{{ msg.Email }}</td>
+                        <td style="padding:8px;">{{ msg.Telephone }}</td>
+                        <td style="padding:8px; white-space:pre-wrap;">{{ msg.Message }}</td>
+                        <td style="padding:8px;">
+                            <a href="{{ url_for('delete_message', index=loop.index0) }}" class="delete" onclick="return confirm('Supprimer ce message ?')">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p>Aucun message reçu.</p>
+        {% endif %}
+    </div>
+
+    <div class="admin-section">
         <h2>Tarifs Assurance (HTML)</h2>
         <form action="{{ url_for('update_assurance_html') }}" method="post" class="card">
             <div class="form-group">

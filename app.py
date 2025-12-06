@@ -3,6 +3,8 @@ import os
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
+import csv
+from datetime import datetime
 from functools import wraps
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
@@ -32,6 +34,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(os.path.join(UPLOAD_FOLDER, 'destinations'), exist_ok=True)
 DATA_FILE = 'data.json'
+MESSAGES_FILE = 'messages.csv'
 
 # --- FONCTIONS DE GESTION DES DONNÉES ---
 def load_data():
@@ -138,6 +141,29 @@ def save_data(data):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def load_messages():
+    if not os.path.exists(MESSAGES_FILE):
+        return []
+    with open(MESSAGES_FILE, 'r', encoding='utf-8', newline='') as f:
+        reader = csv.DictReader(f)
+        return list(reader)
+
+def append_message(row):
+    file_exists = os.path.exists(MESSAGES_FILE)
+    fieldnames = ['Date', 'Nom', 'Email', 'Telephone', 'Message']
+    with open(MESSAGES_FILE, 'a', encoding='utf-8', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        if not file_exists:
+            writer.writeheader()
+        writer.writerow(row)
+
+def save_messages(rows):
+    fieldnames = ['Date', 'Nom', 'Email', 'Telephone', 'Message']
+    with open(MESSAGES_FILE, 'w', encoding='utf-8', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -158,7 +184,17 @@ def services():
 @app.route('/destinations')
 def destinations():
     site_data = load_data()
-    return render_template('destinations.html', data=site_data, destinations=site_data['destinations'])
+    query = request.args.get('query', '').strip().lower()
+    destinations_list = site_data['destinations']
+    services_list = site_data['services']
+    if query:
+        def match(item):
+            return query in item.get('nom', '').lower() or query in item.get('description', '').lower() or query in item.get('prix', '').lower()
+        destinations_list = [d for d in destinations_list if match(d)]
+        services_list = [s for s in services_list if match(s)]
+    else:
+        services_list = []
+    return render_template('destinations.html', data=site_data, destinations=destinations_list, services_results=services_list, query=query)
 
 @app.route('/contact')
 def contact():
@@ -170,6 +206,13 @@ def contact_form():
     email = request.form.get('email')
     telephone = request.form.get('telephone')
     message = request.form.get('message')
+    append_message({
+        'Date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'Nom': nom,
+        'Email': email,
+        'Telephone': telephone,
+        'Message': message
+    })
     try:
         sujet = f"Nouveau message de {nom} pour Trache Travel"
         msg = Message(sujet, sender=app.config['MAIL_USERNAME'], recipients=[app.config['MAIL_USERNAME']])
@@ -203,7 +246,17 @@ def logout():
 @app.route('/admin')
 @login_required
 def admin():
-    return render_template('admin.html', data=load_data())
+    return render_template('admin.html', data=load_data(), messages=load_messages())
+
+@app.route('/admin/messages/delete/<int:index>')
+@login_required
+def delete_message(index):
+    messages = load_messages()
+    if 0 <= index < len(messages):
+        messages.pop(index)
+        save_messages(messages)
+        flash('Message supprimé.', 'success')
+    return redirect(url_for('admin'))
 
 @app.route('/upload_logo', methods=['POST'])
 @login_required
