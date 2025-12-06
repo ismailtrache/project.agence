@@ -61,7 +61,6 @@ def load_data():
                 {'nom': 'Le Caire, Égypte', 'description': 'Aux portes des pyramides, un plongeon dans l\'histoire des pharaons.', 'prix': '€680', 'image': 'uploads/destinations/caire.jpg'},
                 {'nom': 'Istanbul, Turquie', 'description': 'Un pont entre l\'Europe et l\'Asie, riche d\'histoire et de saveurs.', 'prix': '€480', 'image': 'https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&w=800&q=60'},
                 {'nom': 'Sharm El Sheikh, Égypte', 'description': 'Plongée de classe mondiale dans les eaux cristallines de la mer Rouge.', 'prix': '€550', 'image': 'uploads/destinations/SharmElSheikh.jpg'},
-                {'nom': 'Sousse, Tunisie', 'description': 'Combine des plages dorées avec une médina historique classée à l\'UNESCO.', 'prix': '€390', 'image': 'uploads/destinations/sousse.jpg'},
                 {'nom': 'Guangzhou, Chine', 'description': 'Mégapole moderne et dynamique, cœur du commerce et de la gastronomie cantonaise.', 'prix': '€850', 'image': 'uploads/destinations/guangzhou.jpg'},
                 {'nom': 'Toronto, Canada', 'description': 'La métropole cosmopolite du Canada, avec sa skyline iconique et sa scène culturelle vibrante.', 'prix': '€720', 'image': 'uploads/destinations/toronto.jpg'}
             ],
@@ -118,6 +117,18 @@ def load_data():
         'instagram': 'https://www.instagram.com/trache_travel_services/',
         'tiktok': 'https://www.tiktok.com/@trachetravel.services'
     })
+    # Normalise les chemins d'images de destinations (corrige l'ancien dossier mal orthographié)
+    dirty = False
+    for dest in data.get('destinations', []):
+        img = dest.get('image', '')
+        if isinstance(img, str):
+            new_img = img.replace('static/uploads/destinantions/', 'uploads/destinations/')
+            new_img = new_img.replace('static/uploads/destinations/', 'uploads/destinations/')
+            if new_img != img:
+                dest['image'] = new_img
+                dirty = True
+    if dirty:
+        save_data(data)
     return data
 
 def save_data(data):
