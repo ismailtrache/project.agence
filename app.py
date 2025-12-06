@@ -49,21 +49,21 @@ def load_data():
                 {'nom': 'Assurance Voyage', 'description': 'Protection complète pour voyager en toute sérénité et sécurité.', 'icon': 'fa-shield-alt'}
             ],
             'destinations': [
-                {'nom': 'Paris, France', 'description': 'La ville lumière et ses monuments emblématiques.', 'prix': '€599', 'image': 'static/uploads/destinantions/paris.png'},
-                {'nom': 'Dubaï, EAU', 'description': 'Luxe et modernité au cœur du désert.', 'prix': '€899', 'image': 'static/uploads/destinantions/dubai.png'},
+                {'nom': 'Paris, France', 'description': 'La ville lumière et ses monuments emblématiques.', 'prix': '€599', 'image': 'uploads/destinations/paris.png'},
+                {'nom': 'Dubaï, EAU', 'description': 'Luxe et modernité au cœur du désert.', 'prix': '€899', 'image': 'uploads/destinations/dubai.png'},
                 {'nom': 'Tokyo, Japon', 'description': 'Tradition et technologie dans la capitale nippone.', 'prix': '€1299', 'image': 'https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=60'},
                 {'nom': 'New York, USA', 'description': 'La ville qui ne dort jamais et ses gratte-ciels.', 'prix': '€799', 'image': 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=60'},
-                {'nom': 'Santorin, Grèce', 'description': 'Couchers de soleil magiques et villages blancs.', 'prix': '€750', 'image': 'static/uploads/destinantions/santorini.jpg'},
+                {'nom': 'Santorin, Grèce', 'description': 'Couchers de soleil magiques et villages blancs.', 'prix': '€750', 'image': 'uploads/destinations/santorini.jpg'},
                 {'nom': 'Bali, Indonésie', 'description': 'L\'île des dieux, entre plages et rizières verdoyantes.', 'prix': '€1100', 'image': 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=60'},
                 {'nom': 'Rome, Italie', 'description': 'Un voyage à travers l\'histoire antique et la dolce vita.', 'prix': '€450', 'image': 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=60'},
                 {'nom': 'Kyoto, Japon', 'description': 'L\'ancienne capitale impériale, ses temples et ses jardins zen.', 'prix': '€1350', 'image': 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&w=800&q=60'},
                 {'nom': 'Rio de Janeiro, Brésil', 'description': 'Entre plages iconiques, samba et paysages à couper le souffle.', 'prix': '€950', 'image': 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=800&q=60'},
-                {'nom': 'Le Caire, Égypte', 'description': 'Aux portes des pyramides, un plongeon dans l\'histoire des pharaons.', 'prix': '€680', 'image': 'static/uploads/destinantions/caire.jpg'},
+                {'nom': 'Le Caire, Égypte', 'description': 'Aux portes des pyramides, un plongeon dans l\'histoire des pharaons.', 'prix': '€680', 'image': 'uploads/destinations/caire.jpg'},
                 {'nom': 'Istanbul, Turquie', 'description': 'Un pont entre l\'Europe et l\'Asie, riche d\'histoire et de saveurs.', 'prix': '€480', 'image': 'https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&w=800&q=60'},
-                {'nom': 'Sharm El Sheikh, Égypte', 'description': 'Plongée de classe mondiale dans les eaux cristallines de la mer Rouge.', 'prix': '€550', 'image': 'static/uploads/destinantions/SharmElSheikh.jpg'},
-                {'nom': 'Sousse, Tunisie', 'description': 'Combine des plages dorées avec une médina historique classée à l\'UNESCO.', 'prix': '€390', 'image': 'static/uploads/destinantions/sousse.jpg'},
-                {'nom': 'Guangzhou, Chine', 'description': 'Mégapole moderne et dynamique, cœur du commerce et de la gastronomie cantonaise.', 'prix': '€850', 'image': 'static/uploads/destinantions/guangzhou.jpg'},
-                {'nom': 'Toronto, Canada', 'description': 'La métropole cosmopolite du Canada, avec sa skyline iconique et sa scène culturelle vibrante.', 'prix': '€720', 'image': 'static/uploads/destinantions/toronto.jpg'}
+                {'nom': 'Sharm El Sheikh, Égypte', 'description': 'Plongée de classe mondiale dans les eaux cristallines de la mer Rouge.', 'prix': '€550', 'image': 'uploads/destinations/SharmElSheikh.jpg'},
+                {'nom': 'Sousse, Tunisie', 'description': 'Combine des plages dorées avec une médina historique classée à l\'UNESCO.', 'prix': '€390', 'image': 'uploads/destinations/sousse.jpg'},
+                {'nom': 'Guangzhou, Chine', 'description': 'Mégapole moderne et dynamique, cœur du commerce et de la gastronomie cantonaise.', 'prix': '€850', 'image': 'uploads/destinations/guangzhou.jpg'},
+                {'nom': 'Toronto, Canada', 'description': 'La métropole cosmopolite du Canada, avec sa skyline iconique et sa scène culturelle vibrante.', 'prix': '€720', 'image': 'uploads/destinations/toronto.jpg'}
             ],
             'contact_info': {
                 'telephone': '+213 662 90 10 49 / +213 540 62 24 64',
