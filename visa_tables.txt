@@ -1,475 +1,489 @@
-<table class="visa-table">
-    <thead>
-        <tr>
-            <th>Destination</th>
-            <th>Durée</th>
-            <th>Délai</th>
-            <th>Tarif</th>
-            <th>Documents</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/eg.png" alt="Égypte" class="country-flag">
-                    <span>Égypte</span>
-                </div>
-            </td>
-            <td>3 jours</td>
-            <td>Immédiat</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                2,500 DZD
-            </td>
-            <td>Passeport + Billet</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/qa.png" alt="Qatar" class="country-flag">
-                    <span>Qatar</span>
-                </div>
-            </td>
-            <td>1 mois</td>
-            <td>3 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                8,500 DZD
-            </td>
-            <td>Passeport + Photo</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/jo.png" alt="Jordanie" class="country-flag">
-                    <span>Jordanie</span>
-                </div>
-            </td>
-            <td>1-3 mois</td>
-            <td>24h</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                1,700 DZD
-            </td>
-            <td>Passeport + Photo + Acte naissance</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/ae.png" alt="Émirats" class="country-flag">
-                    <span>Dubaï (EAU)</span>
-                </div>
-            </td>
-            <td>1 mois</td>
-            <td>3-4 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                10,000 DZD
-            </td>
-            <td>Passeport + Photo + Documents</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/tr.png" alt="Turquie" class="country-flag">
-                    <span>Turquie</span>
-                </div>
-            </td>
-            <td>Variable</td>
-            <td>24h</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                15,500 DZD
-            </td>
-            <td>Passeport + Visa Schengen</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/th.png" alt="Thaïlande" class="country-flag">
-                    <span>Thaïlande</span>
-                </div>
-            </td>
-            <td>1 mois</td>
-            <td>30 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                14,000 DZD
-            </td>
-            <td>Passeport + Résidence FR</td>
-        </tr>
-    </tbody>
-</table>
+<!-- VISAS ÉLECTRONIQUES -->
+        <h3>Visas Électroniques</h3>
+        <table class="visa-table">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Durée</th>
+                    <th>Délai</th>
+                    <th>Tarif</th>
+                    <th>Documents</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/eg.png" alt="Égypte" class="country-flag">
+                            <span>Égypte</span>
+                        </div>
+                    </td>
+                    <td>3 jours</td>
+                    <td>Immédiat</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        2,500 DZD
+                    </td>
+                    <td>Passeport + Billet</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/qa.png" alt="Qatar" class="country-flag">
+                            <span>Qatar</span>
+                        </div>
+                    </td>
+                    <td>1 mois</td>
+                    <td>3 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        8,500 DZD
+                    </td>
+                    <td>Passeport + Photo</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/jo.png" alt="Jordanie" class="country-flag">
+                            <span>Jordanie</span>
+                        </div>
+                    </td>
+                    <td>1-3 mois</td>
+                    <td>24h</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        1,700 DZD
+                    </td>
+                    <td>Passeport + Photo + Acte naissance</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/ae.png" alt="Émirats" class="country-flag">
+                            <span>Dubaï (EAU)</span>
+                        </div>
+                    </td>
+                    <td>1 mois</td>
+                    <td>3-4 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        10,000 DZD
+                    </td>
+                    <td>Passeport + Photo + Documents</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/tr.png" alt="Turquie" class="country-flag">
+                            <span>Turquie</span>
+                        </div>
+                    </td>
+                    <td>Variable</td>
+                    <td>24h</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        15,500 DZD
+                    </td>
+                    <td>Passeport + Visa Schengen</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/th.png" alt="Thaïlande" class="country-flag">
+                            <span>Thaïlande</span>
+                        </div>
+                    </td>
+                    <td>1 mois</td>
+                    <td>30 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        14,000 DZD
+                    </td>
+                    <td>Passeport + Résidence FR</td>
+                </tr>
+            </tbody>
+        </table>
 
-<table class="visa-table">
-    <thead>
-        <tr>
-            <th>Destination</th>
-            <th>Durée</th>
-            <th>Délai</th>
-            <th>Tarif</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/om.png" alt="Oman" class="country-flag">
-                    <span>Sultanat d'Oman</span>
-                </div>
-            </td>
-            <td>10 jours / 1 mois</td>
-            <td>3-7 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                11,000 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/am.png" alt="Arménie" class="country-flag">
-                    <span>Arménie</span>
-                </div>
-            </td>
-            <td>21 jours / 3 mois</td>
-            <td>10 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                4,500 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/sa.png" alt="Arabie Saoudite" class="country-flag">
-                    <span>Arabie Saoudite</span>
-                </div>
-            </td>
-            <td>90 jours</td>
-            <td>24h</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                33,000 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/cn.png" alt="Chine" class="country-flag">
-                    <span>Chine</span>
-                </div>
-            </td>
-            <td>Variable</td>
-            <td>10 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                11,000 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/sg.png" alt="Singapour" class="country-flag">
-                    <span>Singapour</span>
-                </div>
-            </td>
-            <td>30 jours</td>
-            <td>15 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                32,000 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/id.png" alt="Indonésie" class="country-flag">
-                    <span>Indonésie</span>
-                </div>
-            </td>
-            <td>60 jours</td>
-            <td>6-10 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                28,000 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/vn.png" alt="Vietnam" class="country-flag">
-                    <span>Vietnam</span>
-                </div>
-            </td>
-            <td>30-90 jours</td>
-            <td>14 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                13,000 DZD
-            </td>
-        </tr>
-    </tbody>
-</table>
+        <!-- VISAS ASIATIQUES -->
+        <h3>Visas Asiatiques</h3>
+        <table class="visa-table">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Durée</th>
+                    <th>Délai</th>
+                    <th>Tarif</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/om.png" alt="Oman" class="country-flag">
+                            <span>Sultanat d'Oman</span>
+                        </div>
+                    </td>
+                    <td>10 jours / 1 mois</td>
+                    <td>3-7 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        11,000 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/am.png" alt="Arménie" class="country-flag">
+                            <span>Arménie</span>
+                        </div>
+                    </td>
+                    <td>21 jours / 3 mois</td>
+                    <td>10 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        4,500 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/sa.png" alt="Arabie Saoudite" class="country-flag">
+                            <span>Arabie Saoudite</span>
+                        </div>
+                    </td>
+                    <td>90 jours</td>
+                    <td>24h</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        33,000 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/cn.png" alt="Chine" class="country-flag">
+                            <span>Chine</span>
+                        </div>
+                    </td>
+                    <td>Variable</td>
+                    <td>10 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        11,000 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/sg.png" alt="Singapour" class="country-flag">
+                            <span>Singapour</span>
+                        </div>
+                    </td>
+                    <td>30 jours</td>
+                    <td>15 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        32,000 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/id.png" alt="Indonésie" class="country-flag">
+                            <span>Indonésie</span>
+                        </div>
+                    </td>
+                    <td>60 jours</td>
+                    <td>6-10 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        28,000 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/vn.png" alt="Vietnam" class="country-flag">
+                            <span>Vietnam</span>
+                        </div>
+                    </td>
+                    <td>30-90 jours</td>
+                    <td>14 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        13,000 DZD
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-<table class="visa-table">
-    <thead>
-        <tr>
-            <th>Destination</th>
-            <th>Durée</th>
-            <th>Délai</th>
-            <th>Tarif</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/tz.png" alt="Tanzanie" class="country-flag">
-                    <span>Tanzanie (Zanzibar)</span>
-                </div>
-            </td>
-            <td>1 mois</td>
-            <td>6-10 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                15,000 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/ke.png" alt="Kenya" class="country-flag">
-                    <span>Kenya</span>
-                </div>
-            </td>
-            <td>1 mois / 90 jours</td>
-            <td>8-10 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                14,000 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/et.png" alt="Éthiopie" class="country-flag">
-                    <span>Éthiopie</span>
-                </div>
-            </td>
-            <td>1 mois</td>
-            <td>7 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                22,500 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/cm.png" alt="Cameroun" class="country-flag">
-                    <span>Cameroun</span>
-                </div>
-            </td>
-            <td>90 jours</td>
-            <td>10 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                55,000 DZD
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/ga.png" alt="Gabon" class="country-flag">
-                    <span>Gabon</span>
-                </div>
-            </td>
-            <td>1-3 mois</td>
-            <td>5 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                23,500 DZD
-            </td>
-        </tr>
-    </tbody>
-</table>
+        <!-- VISAS AFRICAINS -->
+        <h3>Visas Africains</h3>
+        <table class="visa-table">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Durée</th>
+                    <th>Délai</th>
+                    <th>Tarif</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/tz.png" alt="Tanzanie" class="country-flag">
+                            <span>Tanzanie (Zanzibar)</span>
+                        </div>
+                    </td>
+                    <td>1 mois</td>
+                    <td>6-10 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        15,000 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/ke.png" alt="Kenya" class="country-flag">
+                            <span>Kenya</span>
+                        </div>
+                    </td>
+                    <td>1 mois / 90 jours</td>
+                    <td>8-10 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        14,000 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/et.png" alt="Éthiopie" class="country-flag">
+                            <span>Éthiopie</span>
+                        </div>
+                    </td>
+                    <td>1 mois</td>
+                    <td>7 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        22,500 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/cm.png" alt="Cameroun" class="country-flag">
+                            <span>Cameroun</span>
+                        </div>
+                    </td>
+                    <td>90 jours</td>
+                    <td>10 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        55,000 DZD
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/ga.png" alt="Gabon" class="country-flag">
+                            <span>Gabon</span>
+                        </div>
+                    </td>
+                    <td>1-3 mois</td>
+                    <td>5 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        23,500 DZD
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-<table class="visa-table">
-    <thead>
-        <tr>
-            <th>Destination</th>
-            <th>Durée</th>
-            <th>Délai</th>
-            <th>Tarif</th>
-            <th>Note</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/ru.png" alt="Russie" class="country-flag">
-                    <span>Russie</span>
-                </div>
-            </td>
-            <td>1 mois</td>
-            <td>Max 15 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                64,000 DZD
-            </td>
-            <td>Dépôt obligatoire</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/jp.png" alt="Japon" class="country-flag">
-                    <span>Japon</span>
-                </div>
-            </td>
-            <td>1 mois</td>
-            <td>10-15 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                11,000 DZD
-            </td>
-            <td>Dépôt obligatoire</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/in.png" alt="Inde" class="country-flag">
-                    <span>Inde</span>
-                </div>
-            </td>
-            <td>1 mois</td>
-            <td>5 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                5,000 DZD
-            </td>
-            <td>Dépôt obligatoire</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/kr.png" alt="Corée du Sud" class="country-flag">
-                    <span>Corée du Sud</span>
-                </div>
-            </td>
-            <td>Variable</td>
-            <td>5 jours</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                9,000 DZD
-            </td>
-            <td>Dépôt obligatoire</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/mx.png" alt="Mexique" class="country-flag">
-                    <span>Mexique</span>
-                </div>
-            </td>
-            <td>30-90 jours</td>
-            <td>Selon RDV</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                12,000 DZD
-            </td>
-            <td>Dépôt obligatoire</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/br.png" alt="Brésil" class="country-flag">
-                    <span>Brésil</span>
-                </div>
-            </td>
-            <td>30-90 jours</td>
-            <td>Selon RDV</td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                12,000 DZD
-            </td>
-            <td>Dépôt obligatoire</td>
-        </tr>
-    </tbody>
-</table>
+        <!-- VISAS STICKERS (AMBASSADES) -->
+        <h3>Visas Stickers - Dépôt en Ambassade</h3>
+        <table class="visa-table">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Durée</th>
+                    <th>Délai</th>
+                    <th>Tarif</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/ru.png" alt="Russie" class="country-flag">
+                            <span>Russie</span>
+                        </div>
+                    </td>
+                    <td>1 mois</td>
+                    <td>Max 15 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        64,000 DZD
+                    </td>
+                    <td>Dépôt obligatoire</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/jp.png" alt="Japon" class="country-flag">
+                            <span>Japon</span>
+                        </div>
+                    </td>
+                    <td>1 mois</td>
+                    <td>10-15 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        11,000 DZD
+                    </td>
+                    <td>Dépôt obligatoire</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/in.png" alt="Inde" class="country-flag">
+                            <span>Inde</span>
+                        </div>
+                    </td>
+                    <td>1 mois</td>
+                    <td>5 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        5,000 DZD
+                    </td>
+                    <td>Dépôt obligatoire</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/kr.png" alt="Corée du Sud" class="country-flag">
+                            <span>Corée du Sud</span>
+                        </div>
+                    </td>
+                    <td>Variable</td>
+                    <td>5 jours</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        9,000 DZD
+                    </td>
+                    <td>Dépôt obligatoire</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/mx.png" alt="Mexique" class="country-flag">
+                            <span>Mexique</span>
+                        </div>
+                    </td>
+                    <td>30-90 jours</td>
+                    <td>Selon RDV</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        12,000 DZD
+                    </td>
+                    <td>Dépôt obligatoire</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/br.png" alt="Brésil" class="country-flag">
+                            <span>Brésil</span>
+                        </div>
+                    </td>
+                    <td>30-90 jours</td>
+                    <td>Selon RDV</td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        12,000 DZD
+                    </td>
+                    <td>Dépôt obligatoire</td>
+                </tr>
+            </tbody>
+        </table>
 
-<table class="visa-table">
-    <thead>
-        <tr>
-            <th>Destination</th>
-            <th>Type</th>
-            <th>Tarif Première Demande</th>
-            <th>Tarif Renouvellement</th>
-            <th>Services Inclus</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/ca.png" alt="Canada" class="country-flag">
-                    <span>Canada</span>
-                </div>
-            </td>
-            <td><span class="visa-type">Tourisme</span></td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                41,000 DZD
-            </td>
-            <td class="price-cell">30,000 DZD</td>
-            <td>Dossier complet + RDV</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/us.png" alt="USA" class="country-flag">
-                    <span>États-Unis</span>
-                </div>
-            </td>
-            <td><span class="visa-type">Tourisme</span></td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                20,000 DZD
-            </td>
-            <td class="price-cell">10,000 DZD</td>
-            <td>DS160 + RDV</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/gb.png" alt="UK" class="country-flag">
-                    <span>Royaume-Uni</span>
-                </div>
-            </td>
-            <td><span class="visa-type">Tourisme</span></td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                48,000 DZD
-            </td>
-            <td class="price-cell">48,000 DZD</td>
-            <td>Dossier anglais + Paiement</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="country-cell">
-                    <img src="https://flagcdn.com/w40/au.png" alt="Australie" class="country-flag">
-                    <span>Australie</span>
-                </div>
-            </td>
-            <td><span class="visa-type">Tourisme</span></td>
-            <td class="price-cell">
-                <span class="price-prefix">À partir de</span>
-                44,000 DZD
-            </td>
-            <td class="price-cell">44,000 DZD</td>
-            <td>Dossier complet</td>
-        </tr>
-    </tbody>
-</table>
+        <!-- VISAS MAJEURS -->
+        <h3>Visas Destinations Majeures</h3>
+        <table class="visa-table">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Type</th>
+                    <th>Tarif Première Demande</th>
+                    <th>Tarif Renouvellement</th>
+                    <th>Services Inclus</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/ca.png" alt="Canada" class="country-flag">
+                            <span>Canada</span>
+                        </div>
+                    </td>
+                    <td><span class="visa-type">Tourisme</span></td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        41,000 DZD
+                    </td>
+                    <td class="price-cell">30,000 DZD</td>
+                    <td>Dossier complet + RDV</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/us.png" alt="USA" class="country-flag">
+                            <span>États-Unis</span>
+                        </div>
+                    </td>
+                    <td><span class="visa-type">Tourisme</span></td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        20,000 DZD
+                    </td>
+                    <td class="price-cell">10,000 DZD</td>
+                    <td>DS160 + RDV</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="UK" class="country-flag">
+                            <span>Royaume-Uni</span>
+                        </div>
+                    </td>
+                    <td><span class="visa-type">Tourisme</span></td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        48,000 DZD
+                    </td>
+                    <td class="price-cell">48,000 DZD</td>
+                    <td>Dossier anglais + Paiement</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="country-cell">
+                            <img src="https://flagcdn.com/w40/au.png" alt="Australie" class="country-flag">
+                            <span>Australie</span>
+                        </div>
+                    </td>
+                    <td><span class="visa-type">Tourisme</span></td>
+                    <td class="price-cell">
+                        <span class="price-prefix">À partir de</span>
+                        44,000 DZD
+                    </td>
+                    <td class="price-cell">44,000 DZD</td>
+                    <td>Dossier complet</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="special-note">
+            <strong>Note spéciale Dubaï :</strong> En cas d'overstay et si le client refuse de régler ses pénalités (200,000 DZD), 
+            celles-ci seront automatiquement facturées à l'agence.
+        </div>
