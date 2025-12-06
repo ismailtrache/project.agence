@@ -1,7 +1,6 @@
-
-#📘 README – TRACHE TRAVEL & SERVICES
+##📘 README – TRACHE TRAVEL & SERVICES
 Votre partenaire pour des voyages inoubliables.
-#🌍 Présentation du projet
+##🌍 Présentation du projet
 
 TRACHE TRAVEL & SERVICES est un site web complet, moderne et fonctionnel dédié aux services de voyage, au conseil touristique et à la réservation de destinations populaires.
 Ce projet représente mon premier site web entièrement réalisé par moi-même, développé pendant mon temps libre, afin de progresser dans le développement web et d’acquérir une expérience réelle dans la création d’une application complète.
@@ -104,3 +103,4 @@ Je suis fier de partager mon travail et de continuer à l'améliorer au fil du t
 #📜 Licence
 
 Toute reproduction commerciale ou réutilisation du design nécessite une autorisation préalable.
+
