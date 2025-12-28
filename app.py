@@ -269,7 +269,7 @@ def save_messages(rows):
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
-        backup_file(MESSAGES_FILE, 'messages.csv')
+    backup_file(MESSAGES_FILE, 'messages.csv')
 
 def login_required(f):
     @wraps(f)
@@ -284,16 +284,6 @@ if FORCE_HTTPS:
     def _force_https():
         if not is_https_request():
             return redirect(request.url.replace('http://', 'https://', 1), code=301)
-
-@app.after_request
-def add_security_headers(response):
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['X-Frame-Options'] = 'DENY'
-    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-    response.headers['Permissions-Policy'] = 'geolocation=()'
-    if is_https_request():
-        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
-    return response
 
 # --- ROUTES PUBLIQUES ---
 @app.route('/')
