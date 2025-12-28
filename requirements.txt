@@ -3,3 +3,5 @@ Werkzeug==3.0.1
 Flask
 Flask-Mail
 python-dotenv
+boto3
+Flask-Limiter

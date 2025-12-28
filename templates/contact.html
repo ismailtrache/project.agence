@@ -24,7 +24,7 @@
                 <p><i class="fas fa-map-marker-alt"></i>{{ data.contact_info.adresse }}</p>
                 <p><i class="fas fa-phone"></i>{{ data.contact_info.telephone }}</p>
                 <p><i class="fas fa-envelope"></i>{{ data.contact_info.email }}</p>
-                <p><i class="fas fa-clock"></i>{{ data.contact_info.horaires }}</p>
+                <p><i class=" fa-clock"></i>{{ data.contact_info.horaires }}</p>
                 <div class="contact-social">
                     <a href="{{ data.contact_info.social_links.facebook }}" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i>{{ data.contact_info.social_links.facebook }}</a>
                     <a href="{{ data.contact_info.social_links.instagram }}" target="_blank" rel="noopener"><i class="fab fa-instagram"></i>{{ data.contact_info.social_links.instagram }}</a>
@@ -35,8 +35,8 @@
                 <h3>Envoyez-nous un message</h3>
                 <form action="{{ url_for('contact_form') }}" method="post">
                     <div class="form-group"><label for="nom">Nom Complet</label><input type="text" id="nom" name="nom" required></div>
-                    <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
-                    <div class="form-group"><label for="telephone">Numéro de téléphone (Optionnel)</label><input type="tel" id="telephone" name="telephone"></div>
+                    <div class="form-group"><label for="email">Email (Facultatif)</label><input type="email" id="email" name="email"></div>
+                    <div class="form-group"><label for="telephone">Numéro de téléphone</label><input type="tel" id="telephone" name="telephone" required></div>
                     <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" rows="5" required></textarea></div>
                     <button type="submit" class="btn-submit">Envoyer</button>
                 </form>

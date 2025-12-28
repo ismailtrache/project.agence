@@ -8,10 +8,19 @@ from datetime import datetime
 from functools import wraps
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
+from werkzeug.middleware.proxy_fix import ProxyFix
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+import boto3
+from botocore.exceptions import BotoCoreError, ClientError
+import logging
+from logging.handlers import RotatingFileHandler
 
 load_dotenv()
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
+limiter = Limiter(get_remote_address, app=app, default_limits=[])
 app.secret_key = 'votre_cle_secrete_ici_pour_les_sessions'
 
 # --- CONFIGURATION POUR L'ENVOI D'EMAILS ---
@@ -35,6 +44,101 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(os.path.join(UPLOAD_FOLDER, 'destinations'), exist_ok=True)
 DATA_FILE = 'data.json'
 MESSAGES_FILE = 'messages.csv'
+
+S3_BUCKET = os.environ.get('S3_BUCKET')
+S3_REGION = os.environ.get('S3_REGION', 'us-east-1')
+S3_PUBLIC_BASE = os.environ.get('S3_PUBLIC_BASE')
+S3_PREFIX = os.environ.get('S3_PREFIX', 'uploads/')
+S3_BACKUP_PREFIX = os.environ.get('S3_BACKUP_PREFIX', 'backups/')
+FORCE_HTTPS = os.environ.get('FORCE_HTTPS', '0') == '1'
+
+_s3_client = boto3.client('s3', region_name=S3_REGION) if S3_BUCKET else None
+
+ADMIN_LOG_PATH = os.environ.get('ADMIN_LOG_PATH', 'admin_access.log')
+admin_logger = logging.getLogger('admin_access')
+if not admin_logger.handlers:
+    _handler = RotatingFileHandler(ADMIN_LOG_PATH, maxBytes=1000000, backupCount=5)
+    _formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+    _handler.setFormatter(_formatter)
+    admin_logger.addHandler(_handler)
+    admin_logger.setLevel(logging.INFO)
+    admin_logger.propagate = False
+
+def s3_enabled():
+    return bool(S3_BUCKET and _s3_client)
+
+def s3_base_url():
+    if S3_PUBLIC_BASE:
+        return S3_PUBLIC_BASE.rstrip('/')
+    if S3_REGION == 'us-east-1':
+        return f"https://{S3_BUCKET}.s3.amazonaws.com"
+    return f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com"
+
+def build_s3_key(subdir, filename):
+    prefix = S3_PREFIX.strip('/')
+    parts = []
+    if prefix:
+        parts.append(prefix)
+    if subdir:
+        parts.append(subdir.strip('/'))
+    parts.append(filename)
+    return "/".join(parts)
+
+def upload_file_to_s3(file_obj, key, content_type):
+    extra_args = {}
+    if content_type:
+        extra_args['ContentType'] = content_type
+    if extra_args:
+        _s3_client.upload_fileobj(file_obj, S3_BUCKET, key, ExtraArgs=extra_args)
+    else:
+        _s3_client.upload_fileobj(file_obj, S3_BUCKET, key)
+
+def save_upload(file_obj, subdir):
+    filename = secure_filename(file_obj.filename)
+    if not filename:
+        return ''
+    rel_path = f"uploads/{subdir}/{filename}" if subdir else f"uploads/{filename}"
+    if s3_enabled():
+        key = build_s3_key(subdir, filename)
+        try:
+            upload_file_to_s3(file_obj, key, file_obj.mimetype)
+        except (BotoCoreError, ClientError) as exc:
+            app.logger.warning("S3 upload failed for %s: %s", key, exc)
+            return ''
+        return f"{s3_base_url()}/{key}"
+    dest_dir = os.path.join(app.config['UPLOAD_FOLDER'], subdir) if subdir else app.config['UPLOAD_FOLDER']
+    os.makedirs(dest_dir, exist_ok=True)
+    file_obj.save(os.path.join(dest_dir, filename))
+    return rel_path
+
+def backup_file(local_path, key_name):
+    if not s3_enabled():
+        return
+    key = f"{S3_BACKUP_PREFIX.strip('/')}/{key_name}".strip('/')
+    try:
+        with open(local_path, "rb") as f:
+            extra_args = {}
+            if local_path.endswith('.json'):
+                extra_args['ContentType'] = 'application/json'
+            elif local_path.endswith('.csv'):
+                extra_args['ContentType'] = 'text/csv'
+            if extra_args:
+                _s3_client.upload_fileobj(f, S3_BUCKET, key, ExtraArgs=extra_args)
+            else:
+                _s3_client.upload_fileobj(f, S3_BUCKET, key)
+    except (OSError, BotoCoreError, ClientError) as exc:
+        app.logger.warning("S3 backup failed for %s: %s", local_path, exc)
+
+def get_client_ip():
+    forwarded = request.headers.get('X-Forwarded-For', '')
+    if forwarded:
+        return forwarded.split(',')[0].strip()
+    return request.remote_addr or 'unknown'
+
+def is_https_request():
+    if request.is_secure:
+        return True
+    return request.headers.get('X-Forwarded-Proto', '').lower() == 'https'
 
 # --- FONCTIONS DE GESTION DES DONNÉES ---
 def load_data():
@@ -137,6 +241,7 @@ def load_data():
 def save_data(data):
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
+    backup_file(DATA_FILE, 'data.json')
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -156,6 +261,7 @@ def append_message(row):
         if not file_exists:
             writer.writeheader()
         writer.writerow(row)
+    backup_file(MESSAGES_FILE, 'messages.csv')
 
 def save_messages(rows):
     fieldnames = ['Date', 'Nom', 'Email', 'Telephone', 'Message']
@@ -163,6 +269,7 @@ def save_messages(rows):
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
+        backup_file(MESSAGES_FILE, 'messages.csv')
 
 def login_required(f):
     @wraps(f)
@@ -171,6 +278,22 @@ def login_required(f):
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
+
+if FORCE_HTTPS:
+    @app.before_request
+    def _force_https():
+        if not is_https_request():
+            return redirect(request.url.replace('http://', 'https://', 1), code=301)
+
+@app.after_request
+def add_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    response.headers['Permissions-Policy'] = 'geolocation=()'
+    if is_https_request():
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
+    return response
 
 # --- ROUTES PUBLIQUES ---
 @app.route('/')
@@ -202,10 +325,13 @@ def contact():
 
 @app.route('/contact_form', methods=['POST'])
 def contact_form():
-    nom = request.form.get('nom')
-    email = request.form.get('email')
-    telephone = request.form.get('telephone')
-    message = request.form.get('message')
+    nom = (request.form.get('nom') or '').strip()
+    email = (request.form.get('email') or '').strip()
+    telephone = (request.form.get('telephone') or '').strip()
+    message = (request.form.get('message') or '').strip()
+    if not nom or not telephone or not message:
+        flash('Veuillez renseigner le nom, le numero de telephone et le message.', 'danger')
+        return redirect(url_for('contact'))
     append_message({
         'Date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         'Nom': nom,
@@ -226,14 +352,19 @@ def contact_form():
 
 # --- ROUTES DE CONNEXION ---
 @app.route('/login', methods=['GET', 'POST'])
+@limiter.limit('5 per minute')
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        client_ip = get_client_ip()
+        user_agent = request.headers.get('User-Agent', '-')
         if username == ADMIN_USERNAME and check_password_hash(ADMIN_PASSWORD_HASH, password):
             session['logged_in'] = True
+            admin_logger.info('login success user=%s ip=%s ua=%s', username, client_ip, user_agent)
             return redirect(url_for('admin'))
         else:
+            admin_logger.warning('login failed user=%s ip=%s ua=%s', username, client_ip, user_agent)
             flash('Identifiants incorrects.', 'danger')
     return render_template('login.html')
 
@@ -265,9 +396,9 @@ def upload_logo():
     if 'logo' in request.files and request.files['logo'].filename != '':
         file = request.files['logo']
         if allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            site_data['logo'] = f'uploads/{filename}'
+            stored_path = save_upload(file, '')
+            if stored_path:
+                site_data['logo'] = stored_path
             save_data(site_data)
             flash('Logo mis à jour !')
     return redirect(url_for('admin'))
@@ -280,10 +411,9 @@ def add_destination():
     if 'image' in request.files and request.files['image'].filename != '':
         file = request.files['image']
         if allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            dest_folder = os.path.join(app.config['UPLOAD_FOLDER'], 'destinations')
-            file.save(os.path.join(dest_folder, filename))
-            new_dest['image'] = f'uploads/destinations/{filename}'
+            stored_path = save_upload(file, 'destinations')
+            if stored_path:
+                new_dest['image'] = stored_path
     site_data['destinations'].append(new_dest)
     save_data(site_data)
     flash('Destination ajoutée !')
@@ -301,10 +431,9 @@ def edit_destination(index):
         if 'image' in request.files and request.files['image'].filename != '':
             file = request.files['image']
             if allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                dest_folder = os.path.join(app.config['UPLOAD_FOLDER'], 'destinations')
-                file.save(os.path.join(dest_folder, filename))
-                destination['image'] = f'uploads/destinations/{filename}'
+                stored_path = save_upload(file, 'destinations')
+                if stored_path:
+                    destination['image'] = stored_path
         save_data(site_data)
         flash('Destination modifiée !')
         return redirect(url_for('admin'))

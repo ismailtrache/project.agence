@@ -55,7 +55,7 @@
         <nav class="container">
             <a href="{{ url_for('index') }}" style="text-decoration: none;">
                 <div class="logo-container">
-                    {% if data.logo %}<img src="{{ url_for('static', filename=data.logo) }}" alt="Logo" class="logo">{% endif %}
+                    {% if data.logo %}<img src="{% if 'http' in data.logo %}{{ data.logo }}{% else %}{{ url_for('static', filename=data.logo) }}{% endif %}" alt="Logo" class="logo">{% endif %}
                     <div class="company-name">{{ data.company_name }}</div>
                 </div>
             </a>
