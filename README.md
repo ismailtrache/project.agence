@@ -1,72 +1,79 @@
-##📘 README – TRACHE TRAVEL & SERVICES
-Votre partenaire pour des voyages inoubliables.
-##🌍 Présentation du projet
+# 📘 TRACHE TRAVEL & SERVICES  
+### Votre partenaire pour des voyages inoubliables ✈️🌍
 
-TRACHE TRAVEL & SERVICES est un site web complet, moderne et fonctionnel dédié aux services de voyage, au conseil touristique et à la réservation de destinations populaires.
-Ce projet représente mon premier site web entièrement réalisé par moi-même, développé pendant mon temps libre, afin de progresser dans le développement web et d’acquérir une expérience réelle dans la création d’une application complète.
+---
 
-L’objectif du site est d’offrir une expérience simple, élégante et intuitive pour permettre aux utilisateurs de :
+## 🌍 Présentation du projet
 
-Explorer des destinations de voyage variées
+**TRACHE TRAVEL & SERVICES** est un site web moderne et fonctionnel dédié aux **services de voyage**, au **conseil touristique** et à la **présentation de destinations populaires**.
 
-Découvrir des services touristiques
+Ce projet représente **mon premier site web complet**, entièrement conçu et développé par moi-même, durant mon temps libre.  
+Il a été réalisé dans un objectif d’apprentissage, afin de **développer mes compétences en développement web** et d’acquérir une **expérience concrète** dans la création d’une application web complète, de la conception au déploiement.
 
-Contacter facilement l’agence
+L’objectif principal du site est d’offrir une **expérience utilisateur simple, élégante et intuitive**, permettant aux visiteurs de :
 
-Naviguer via un design moderne, responsive et agréable
+- Explorer différentes destinations de voyage  
+- Découvrir les services proposés par l’agence  
+- Contacter facilement l’équipe  
+- Naviguer dans une interface moderne, responsive et agréable  
 
-#✨ Fonctionnalités principales
-#🛫 Catalogue de destinations
+---
 
-Affichage de plusieurs destinations populaires (Oran, Istanbul, Paris, Santorini, etc.)
+## ✨ Fonctionnalités principales
 
-Images attractives et descriptions détaillées
+### 🛫 Catalogue de destinations
+- Présentation de destinations populaires : **Oran, Istanbul, Paris, Santorini**, etc.
+- Images attractives
+- Descriptions détaillées pour chaque destination
 
-#🧭 Services proposés
+---
 
-Assistance voyage
+### 🧭 Services proposés
+- Assistance et conseil voyage  
+- Assurance voyage  
+- Aide à la constitution des dossiers de visa  
+- Transport et accompagnement touristique  
 
-Assurance voyage
+---
 
-Aide pour les dossiers de visa
+### 📱 Design moderne & responsive
+- Interface compatible **ordinateur, tablette et mobile**
+- Navigation fluide et intuitive
+- Menu dynamique (hamburger pour mobile)
 
-Transport et accompagnement
+---
 
-#📱 Design moderne & responsive
+### 📩 Formulaire de contact
+- Envoi de messages et demandes d’informations
+- Stockage des données via **CSV ou JSON** selon les besoins
+- Notifications utilisateur via **Flash Messages**
 
-Interface compatible PC, mobile et tablette
+---
 
-Navigation fluide
+### 🔒 Espace administrateur
+- Connexion sécurisée pour l’administrateur
+- Consultation des messages envoyés par les visiteurs
+- Gestion basique du contenu du site
 
-Menu dynamique (hamburger mobile)
+---
 
-#📩 Formulaire de contact
+## 🛠️ Technologies utilisées
 
-Envoi de messages et demandes d’informations
+| Technologie | Rôle |
+|------------|------|
+| **Python (Flask)** | Back-end léger et rapide |
+| **HTML5 / CSS3 / JavaScript** | Structure, design et animations |
+| **Jinja2** | Templates dynamiques |
+| **PythonAnywhere** | Hébergement et déploiement |
+| **JSON / CSV** | Stockage simple des données |
+| **Flask-Mail** | Envoi d’e-mails |
+| **Python-dotenv** | Gestion sécurisée des variables d’environnement |
 
-Gestion des données via CSV ou JSON selon les besoins
+---
 
-Notifcations utilisateur avec Flash Messages
+## 📁 Structure du projet
 
-#🔒 Espace Admin
-
-Connexion administrateur
-
-Consultation des messages envoyés par les visiteurs
-
-Gestion basique des contenus
-
-#🛠️ Technologies utilisées
-Technologie	Rôle
-Python (Flask)	Back-end léger et rapide
-HTML5 / CSS3 / JS	Structure, design, animations
-Jinja2	Templates dynamiques
-PythonAnywhere	Hébergement du site
-JSON / CSV	Stockage simple des données
-Flask-Mail	Envoi d’emails
-Python-dotenv	Variables d’environnement sécurisées
-
-#📁 Structure du projet
+```bash
 project.agence/
 │ app.py
 │ data.json
@@ -79,28 +86,28 @@ project.agence/
 │   └── css / images / js
 │
 └── templates/
+    ├── base.html
     ├── index.html
     ├── services.html
     ├── destinations.html
     ├── contact.html
-    ├── admin.html
-    └── base.html
+    └── admin.html
+```
 
-#🚀 Mot personnel
+🚀 Motivation personnelle
 
-Ce site est mon premier projet web complet.
-Je l’ai construit seul, de A à Z, pendant mon temps libre, afin :
+Ce site est mon premier projet web complet, réalisé seul, de A à Z.
+Je l’ai développé pendant mon temps libre dans le but de :
 
-d'améliorer mes compétences en développement web
+Renforcer mes compétences en développement web
 
-de comprendre en profondeur Flask et le déploiement
+Comprendre en profondeur Flask et le déploiement d’une application
 
-et de créer un site qui reflète ma passion pour l’organisation de voyages
+Créer un projet concret reflétant ma passion pour le voyage et la technologie
 
-Ce projet représente une étape importante dans mon évolution en tant que développeur.
-Je suis fier de partager mon travail et de continuer à l'améliorer au fil du temps.
+Ce projet représente une étape importante dans mon parcours de développeur.
+Je suis fier de partager ce travail et j’ai l’intention de continuer à l’améliorer au fil du temps (nouvelles fonctionnalités, sécurité, performance, UX).
 
-#📜 Licence
+📜 Licence
 
-Toute reproduction commerciale ou réutilisation du design nécessite une autorisation préalable.
-
+Toute reproduction commerciale, réutilisation du design ou du code à des fins professionnelles nécessite une autorisation préalable.
