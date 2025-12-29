@@ -22,7 +22,6 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
 limiter = Limiter(get_remote_address, app=app, default_limits=[])
 app.secret_key = 'votre_cle_secrete_ici_pour_les_sessions'
-app.jinja_env.globals['datetime'] = datetime
 
 # --- CONFIGURATION POUR L'ENVOI D'EMAILS ---
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -740,11 +739,17 @@ base_template = '''
         .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--primary); color: white; padding: 1rem 2rem; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 2000; transition: bottom 0.5s ease-in-out; }
         .toast.show { bottom: 30px; }
         @media (max-width: 768px) {
-            .company-name { font-size: 1.2rem; }
+            header { padding: 0.75rem 0; }
+            .company-name { font-size: 1.1rem; }
+            .logo { width: 48px; height: 48px; }
             .hamburger { display: block; z-index: 1001; }
-            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background-color: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 6rem 2rem 2rem; gap: 2rem; transition: right 0.4s ease-in-out; }
+            .nav-links { position: fixed; top: 0; right: -100%; width: 85%; height: 100vh; background-color: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); flex-direction: column; align-items: flex-start; justify-content: flex-start; padding: 5rem 1.5rem 2rem; gap: 1.5rem; transition: right 0.4s ease-in-out; }
             .nav-links.active { right: 0; }
-            .nav-links a { font-size: 1.2rem; width: 100%; }
+            .nav-links a { font-size: 1.1rem; width: 100%; padding: 0.85rem 1rem; }
+            .page-header { padding: 3rem 0; }
+            .page-header h1 { font-size: 2rem; }
+            .section { padding: 3rem 0; }
+            main { padding-top: 0.25rem; }
         }
     </style>
 </head>
@@ -753,7 +758,7 @@ base_template = '''
         <nav class="container">
             <a href="{{ url_for('index') }}" style="text-decoration: none;">
                 <div class="logo-container">
-                    {% if data.logo %}<img src="{{ url_for('static', filename=data.logo) }}" alt="Logo" class="logo">{% endif %}
+                    {% if data.logo %}<img src="{% if 'http' in data.logo %}{{ data.logo }}{% else %}{{ url_for('static', filename=data.logo) }}{% endif %}" alt="Logo" class="logo">{% endif %}
                     <div class="company-name">{{ data.company_name }}</div>
                 </div>
             </a>
@@ -781,11 +786,29 @@ base_template = '''
     </main>
     <footer>
         <div class="footer-content">
-            <div class="footer-section"><h3>{{ data.company_name }}</h3><p>Votre partenaire pour des voyages inoubliables.</p></div>
-            <div class="footer-section"><h3>Contact</h3><p><i class="fas fa-phone"></i> {{ data.contact_info.telephone }}</p><p><i class="fas fa-envelope"></i> {{ data.contact_info.email }}</p></div>
+            <div class="footer-section">
+                <h3>{{ data.company_name }}</h3>
+                <p>{{ data.tagline }}</p>
+                <div style="display:flex; gap:16px; margin-top:0.75rem; align-items:center;">
+                    <a href="{{ data.contact_info.social_links.facebook }}" target="_blank" rel="noopener" aria-label="Facebook" style="color:white; font-size:1.5rem;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="{{ data.contact_info.social_links.instagram }}" target="_blank" rel="noopener" aria-label="Instagram" style="color:white; font-size:1.5rem;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="{{ data.contact_info.social_links.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok" style="color:white; font-size:1.5rem;">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-phone"></i> {{ data.contact_info.telephone }}</p>
+                <p><i class="fas fa-envelope"></i> {{ data.contact_info.email }}</p>
+            </div>
             <div class="footer-section"><h3>Liens Rapides</h3><a href="{{ url_for('services') }}">Services</a><a href="{{ url_for('destinations') }}">Destinations</a><a href="{{ url_for('contact') }}">Contact</a></div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2024 {{ data.company_name }}. Tous droits réservés.</p></div>
+        <div class="footer-bottom"><p>&copy; 2026 {{ data.company_name }}. Tous droits réservés.</p></div>
     </footer>
     <script>
         const hamburgerButton = document.getElementById('hamburger-button');
@@ -875,7 +898,7 @@ index_template = '''
 </style>
 
 <section class="hero">
-    <div class="hero-content"><h1>Le Voyage de Vos Rêves Commence Ici</h1><p>Découvrez des destinations incroyables et créez des souvenirs inoubliables.</p>
+    <div class="hero-content><h1>Le Voyage de Vos Rêves Commence Ici</h1><p>Découvrez des destinations incroyables et créez des souvenirs inoubliables.</p>
         <form action="{{ url_for('destinations') }}" method="get"><div class="search-bar"><i class="fas fa-search" style="color: #999; padding-left: 0.5rem;"></i><input type="text" name="query" placeholder="Essayez 'Paris', 'plage'..." class="search-input"><button type="submit" class="search-btn">Rechercher</button></div></form>
     </div>
 </section>
@@ -888,7 +911,6 @@ index_template = '''
 
 services_template = '''
 {% extends "base.html" %}
-{% block title %}{{ super() }} - Nos Services{% endblock %}
 {% block content %}
 <style>
     .service-card { background: white; padding: 2rem; border-radius: var(--border-radius); text-align: center; box-shadow: var(--shadow); transition: all 0.3s ease; }
@@ -929,7 +951,6 @@ destinations_template = '''
     .destination-card img { width: 100%; height: 350px; object-fit: cover; }
     .dest-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); }
     .dest-content { position: absolute; bottom: 0; left: 0; padding: 1.5rem; color: white; width: 100%; }
-    .dest-price { position: absolute; top: 1rem; right: 1rem; background: var(--accent); color: var(--dark); padding: 0.5rem 1rem; border-radius: 50px; font-weight: 700; }
 </style>
 <div class="page-header"><h1>Explorez le Monde</h1></div>
 <section class="section">
@@ -1084,7 +1105,7 @@ admin_template = '''
                     <a href="{{ url_for('edit_destination', index=i) }}">Modifier</a>
                     <a href="{{ url_for('delete_destination', index=i) }}" onclick="return confirm('?tes-vous s?r ?')" class="delete">Supprimer</a>
                 </div>
-            </li>
+                       </li>
             {% endfor %}
         </ul>
     </div>
