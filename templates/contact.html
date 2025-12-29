@@ -6,6 +6,8 @@
     @media (min-width: 768px) { .contact-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
     .contact-info p { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; font-size: 1.1rem; }
     .contact-info i { font-size: 1.5rem; color: var(--primary); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+    .contact-map-link { color: inherit; text-decoration: none; }
+    .contact-map-link:hover { text-decoration: underline; }
     .contact-social a { display: flex; align-items: center; gap: 0.7rem; color: var(--primary); text-decoration: none; margin-bottom: 0.8rem; word-break: break-all; }
     .contact-social i { font-size: 1.5rem; color: white; background: var(--primary); width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
     .contact-form .form-group { margin-bottom: 1.5rem; }
@@ -21,7 +23,7 @@
         <div class="contact-grid">
             <div class="contact-info">
                 <h3>Informations de Contact</h3>
-                <p><i class="fas fa-map-marker-alt"></i>{{ data.contact_info.adresse }}</p>
+                <p><i class="fas fa-map-marker-alt"></i><a class="contact-map-link" href="https://www.google.com/maps/place/TRACHE+TRAVEL+SERVICES/@35.6999797,-0.6176269,17z/data=!3m1!4b1!4m6!3m5!1s0xd7e89f151826adb:0xf1caabb24d1a41c5!8m2!3d35.6999797!4d-0.615052!16s%2Fg%2F11vbbt0p74?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">{{ data.contact_info.adresse }}</a></p>
                 <p><i class="fas fa-phone"></i>{{ data.contact_info.telephone }}</p>
                 <p><i class="fas fa-envelope"></i>{{ data.contact_info.email }}</p>
                 <p><i class="fas fa-clock"></i>{{ data.contact_info.horaires }}</p>

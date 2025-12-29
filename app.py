@@ -22,6 +22,7 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
 limiter = Limiter(get_remote_address, app=app, default_limits=[])
 app.secret_key = 'votre_cle_secrete_ici_pour_les_sessions'
+app.jinja_env.globals['datetime'] = datetime
 
 # --- CONFIGURATION POUR L'ENVOI D'EMAILS ---
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
