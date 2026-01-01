@@ -37,6 +37,14 @@
         .footer-bottom { text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--secondary); }
         .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--primary); color: white; padding: 1rem 2rem; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 2000; transition: bottom 0.5s ease-in-out; }
         .toast.show { bottom: 30px; }
+        .page-header, .section { animation: fade-up 0.7s ease both; }
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .page-header, .section { animation: none; }
+        }
         @media (max-width: 768px) {
             header { padding: 0.75rem 0; }
             .company-name { font-size: 1.1rem; }

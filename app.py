@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+import unicodedata
 import boto3
 from botocore.exceptions import BotoCoreError, ClientError
 import logging
@@ -675,6 +676,16 @@ def service_detail(service_name):
     if not service:
         flash("Service introuvable.", "danger")
         return redirect(url_for('services'))
+
+    # Route based on normalized name to avoid encoding issues.
+    normalized_name = unicodedata.normalize('NFKD', service_name or '')
+    normalized_name = ''.join(ch for ch in normalized_name if not unicodedata.combining(ch)).lower()
+    if "visa" in normalized_name:
+        return render_template('visa_service.html', data=site_data, service=service)
+    if "assurance" in normalized_name:
+        return render_template('assurance_service.html', data=site_data, service=service)
+    if "hotel" in normalized_name:
+        return render_template('hotels_service.html', data=site_data, service=service)
     
     # Routage conditionnel selon le service
     if service_name == "Visa & Documentation":
