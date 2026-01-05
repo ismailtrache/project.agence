@@ -16,13 +16,14 @@
 </div>
 <section class="section">
     <div class="container">
-        <h2 class="section-title">Une Gamme Complète Pour Votre Confort</h2>
-        <p class="section-subtitle">De la planification à la réalisation de votre voyage, nous couvrons tous les aspects pour vous garantir une expérience exceptionnelle et sans souci.</p>
+        <h2 class="section-title">Une Gamme ComplÇùte Pour Votre Confort</h2>
+        <p class="section-subtitle">De la planification Çÿ la rÇ¸alisation de votre voyage, nous couvrons tous les aspects pour vous garantir une expÇ¸rience exceptionnelle et sans souci.</p>
+        {% set contact_only_indices = [0, 3] %}
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
             {% for service in data.services %}
-            {% set link = url_for('contact') %}
-            {% if service.nom in ['Visa & Documentation', 'Assurance Voyage', 'Hôtels de Prestige'] %}
-                {% set link = url_for('service_detail', service_name=service.nom) %}
+            {% set link = url_for('service_detail', service_name=service.nom) %}
+            {% if loop.index0 in contact_only_indices %}
+                {% set link = url_for('contact') %}
             {% endif %}
             <a href="{{ link }}" class="quote-link" style="text-decoration: none; color: inherit;">
                 <div class="service-card">
