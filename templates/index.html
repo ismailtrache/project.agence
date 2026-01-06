@@ -37,11 +37,70 @@
     .service-icon { font-size: 3rem; color: var(--primary); margin-bottom: 1rem; }
     .service-card h3 { color: var(--primary); margin-bottom: 1rem; }
     .why-us-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem; }
+    .flight-search { background: linear-gradient(135deg, rgba(44,91,97,0.12), rgba(234,179,8,0.12)); padding: 2.5rem 0 3.5rem; }
+    .flight-search-card { background: #fff; border-radius: var(--border-radius); padding: 2rem; box-shadow: var(--shadow); margin: 0 auto; max-width: 980px; }
+    .flight-search-header { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .flight-search-header h2 { color: var(--primary); font-size: 1.9rem; margin-bottom: 0.25rem; }
+    .flight-search-header p { color: var(--text-secondary); margin: 0; }
+    .flight-search-badge { background: rgba(44,91,97,0.12); color: var(--primary); padding: 0.4rem 0.9rem; border-radius: 999px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .flight-search-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; align-items: end; }
+    .flight-field label { display: block; font-weight: 600; color: var(--primary); margin-bottom: 0.4rem; }
+    .flight-field input, .flight-field select { width: 100%; padding: 0.75rem 0.85rem; border: 1px solid #d9e1e6; border-radius: 10px; font-size: 0.95rem; }
+    .flight-check { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 0.75rem; border: 1px solid #d9e1e6; border-radius: 10px; background: #f8fafc; font-weight: 600; color: var(--primary); margin-bottom: 0; cursor: pointer; }
+    .flight-check input { width: auto; }
+    .flight-field.is-hidden { display: none; }
+    .flight-search-button { width: 100%; }
+    .flight-search-note { margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem; }
+    .flight-alert { margin-top: 1rem; padding: 0.9rem 1rem; border-radius: 12px; font-weight: 600; }
+    .flight-alert-error { background: #fee2e2; color: #991b1b; }
+    .flight-results { margin-top: 1.5rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .flight-card { background: #f8fafc; border-radius: 16px; padding: 1rem; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 0.9rem; }
+    .flight-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .flight-airline { font-weight: 700; color: var(--primary); }
+    .flight-number { color: var(--text-secondary); font-size: 0.9rem; }
+    .flight-status { padding: 0.3rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; text-transform: capitalize; }
+    .flight-status-scheduled { background: #e2e8f0; color: #475569; }
+    .flight-status-active { background: #dcfce7; color: #166534; }
+    .flight-status-landed { background: #dbeafe; color: #1d4ed8; }
+    .flight-status-cancelled { background: #fee2e2; color: #991b1b; }
+    .flight-status-incident, .flight-status-diverted { background: #fef3c7; color: #92400e; }
+    .flight-status-unknown { background: #e5e7eb; color: #374151; }
+    .flight-route { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 0.75rem; }
+    .flight-iata { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+    .flight-airport { color: var(--text-secondary); font-size: 0.85rem; }
+    .flight-time { margin-top: 0.35rem; font-weight: 600; }
+    .flight-arrow { color: var(--accent); font-size: 1.1rem; text-align: center; }
+    .flight-meta { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .flight-meta-item { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.65rem; border-radius: 999px; border: 1px solid #e2e8f0; background: #fff; font-size: 0.8rem; color: var(--text-secondary); }
+    .flight-meta-item strong { color: var(--primary); }
+    .flight-details-btn { align-self: flex-start; font-size: 0.9rem; padding: 0.6rem 1.2rem; }
+    .flight-modal { position: fixed; inset: 0; display: none; z-index: 3000; align-items: center; justify-content: center; padding: 2rem 1rem; }
+    .flight-modal.active { display: flex; }
+    .flight-modal-backdrop { position: absolute; inset: 0; background: rgba(27, 38, 44, 0.65); }
+    .flight-modal-dialog { position: relative; max-width: 820px; width: 100%; max-height: 85vh; overflow-y: auto; background: #fff; border-radius: 18px; padding: 1.5rem; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35); }
+    .flight-modal-close { position: absolute; top: 12px; right: 14px; background: transparent; border: none; font-size: 1.6rem; cursor: pointer; color: var(--dark); }
+    .flight-modal-title { margin: 0 0 1rem 0; color: var(--primary); font-size: 1.4rem; }
+    .flight-modal-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    .flight-modal-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(27, 38, 44, 0.6); }
+    .flight-modal-value { font-weight: 600; color: var(--dark); margin-top: 0.35rem; }
+    .flight-modal-route { display: grid; gap: 0.6rem; padding: 0.9rem; border-radius: 14px; background: #f8fafc; margin-top: 1rem; }
+    .flight-modal-chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.6rem; border-radius: 999px; font-size: 0.75rem; background: rgba(44, 91, 97, 0.12); color: var(--primary); }
+    .flight-modal-section { margin-top: 1.2rem; }
+    .flight-modal-segments { display: grid; gap: 0.75rem; }
+    .flight-modal-segment { border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.75rem; background: #fdfefe; }
+    .flight-modal-segment-title { font-weight: 700; color: var(--primary); margin-bottom: 0.35rem; }
+    .flight-modal-segment-row { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .flight-modal-pricing { display: grid; gap: 0.5rem; }
+    .flight-modal-pricing-item { display: flex; justify-content: space-between; gap: 1rem; font-weight: 600; color: var(--dark); }
+    .flight-modal-pricing-item span { color: var(--text-secondary); font-weight: 500; }
     @media (max-width: 768px) {
         .hero { padding: 3.5rem 0 3rem; }
         .hero-content { max-width: 100%; }
         .hero-actions { flex-direction: column; }
         .btn { width: 100%; font-size: 1rem; }
+        .flight-search { padding: 2rem 0 2.5rem; }
+        .flight-search-card { padding: 1.5rem; }
+        .flight-search-header { align-items: flex-start; }
     }
     @media (max-width: 576px) {
         .hero { min-height: 60vh; }
@@ -62,6 +121,412 @@
         <div class="hero-proof">Reponse rapide + assistance 7j/7</div>
     </div>
 </section>
+
+<section class="section flight-search">
+    <div class="container">
+        <div class="flight-search-card">
+            <div class="flight-search-header">
+                <div>
+                    <h2>Trouver un vol</h2>
+                    <p>Horaires et statut des vols en temps reel.</p>
+                </div>
+                <div class="flight-search-badge"><i class="fas fa-plane"></i> Info vols</div>
+            </div>
+            <form class="flight-search-form" method="post" action="{{ url_for('flight_search') }}">
+                <div class="flight-field">
+                    <label for="trip-type">Type</label>
+                    <select id="trip-type" name="trip_type">
+                        <option value="2" {% if flight_query.get('trip_type', '2') == '2' %}selected{% endif %}>Aller simple</option>
+                        <option value="1" {% if flight_query.get('trip_type') == '1' %}selected{% endif %}>Aller-retour</option>
+                    </select>
+                </div>
+                <div class="flight-field">
+                    <label for="departure">Depart (IATA)</label>
+                    <input type="text" id="departure" name="departure" list="iata-list" maxlength="3" pattern="[A-Za-z]{3}" placeholder="CDG" value="{{ flight_query.get('dep_iata', '') }}" required>
+                </div>
+                <div class="flight-field">
+                    <label for="arrival">Arrivee (IATA)</label>
+                    <input type="text" id="arrival" name="arrival" list="iata-list" maxlength="3" pattern="[A-Za-z]{3}" placeholder="ALG" value="{{ flight_query.get('arr_iata', '') }}" required>
+                </div>
+                <div class="flight-field">
+                    <label for="flight-date">Date</label>
+                    <input type="date" id="flight-date" name="flight_date" value="{{ flight_query.get('flight_date', '') }}" required>
+                </div>
+                <div class="flight-field" id="return-date-field">
+                    <label for="return-date">Date retour</label>
+                    <input type="date" id="return-date" name="return_date" value="{{ flight_query.get('return_date', '') }}">
+                </div>
+                <div class="flight-field">
+                    <label for="travel-class">Classe</label>
+                    <select id="travel-class" name="travel_class">
+                        <option value="1" {% if flight_query.get('travel_class', '1') == '1' %}selected{% endif %}>Economique</option>
+                        <option value="2" {% if flight_query.get('travel_class') == '2' %}selected{% endif %}>Premium eco</option>
+                        <option value="3" {% if flight_query.get('travel_class') == '3' %}selected{% endif %}>Business</option>
+                        <option value="4" {% if flight_query.get('travel_class') == '4' %}selected{% endif %}>First</option>
+                    </select>
+                </div>
+                <div class="flight-field">
+                    <label for="passengers">Passagers</label>
+                    <input type="number" id="passengers" name="passengers" min="1" max="9" value="{{ flight_query.get('passengers', 1) }}" required>
+                </div>
+                <div class="flight-field">
+                    <label for="max-price">Prix max</label>
+                    <input type="number" id="max-price" name="max_price" min="0" step="1" placeholder="ex: 300" value="{{ flight_query.get('max_price', '') }}">
+                </div>
+                <div class="flight-field">
+                    <label class="flight-check" for="direct-only">
+                        <input type="checkbox" id="direct-only" name="direct_only" {% if flight_query.get('direct_only') %}checked{% endif %}>
+                        Vol direct
+                    </label>
+                </div>
+                <div class="flight-field">
+                    <label class="flight-check" for="deep-search">
+                        <input type="checkbox" id="deep-search" name="deep_search" {% if flight_query.get('deep_search') %}checked{% endif %}>
+                        Deep search
+                    </label>
+                </div>
+                <button class="btn btn-primary flight-search-button" type="submit"><i class="fas fa-search"></i> Rechercher</button>
+            </form>
+            <datalist id="iata-list"></datalist>
+            <p class="flight-search-note">Exemples: ALG, CDG, DXB, ORN. Les horaires sont fournis a titre indicatif.</p>
+            {% if flight_error %}
+            <div class="flight-alert flight-alert-error">{{ flight_error }}</div>
+            {% endif %}
+            {% if flight_results %}
+            <div class="flight-results">
+                {% for flight in flight_results %}
+                <div class="flight-card">
+                    <div class="flight-card-top">
+                        <div>
+                            <div class="flight-airline">{{ flight.airline }}</div>
+                            <div class="flight-number">{{ flight.flight_number }}</div>
+                        </div>
+                        <span class="flight-status flight-status-{{ flight.status_class }}">{{ flight.status }}</span>
+                    </div>
+                    <div class="flight-route">
+                        <div>
+                            <div class="flight-iata">{{ flight.dep_iata }}</div>
+                            <div class="flight-airport">{{ flight.dep_airport }}</div>
+                            <div class="flight-time">{{ flight.dep_time }}</div>
+                        </div>
+                        <div class="flight-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div>
+                            <div class="flight-iata">{{ flight.arr_iata }}</div>
+                            <div class="flight-airport">{{ flight.arr_airport }}</div>
+                            <div class="flight-time">{{ flight.arr_time }}</div>
+                        </div>
+                    </div>
+                    <div class="flight-meta">
+                        {% if flight.price is not none %}
+                        <div class="flight-meta-item"><i class="fas fa-tag"></i> <strong>{{ flight.price }}</strong> {{ flight.currency }}</div>
+                        {% endif %}
+                        {% if flight.duration %}
+                        <div class="flight-meta-item"><i class="fas fa-clock"></i> {{ flight.duration }}</div>
+                        {% endif %}
+                        {% if flight.trip_type == '1' %}
+                        <div class="flight-meta-item"><i class="fas fa-repeat"></i> Aller-retour</div>
+                        {% endif %}
+                    </div>
+                    <button class="btn btn-secondary flight-details-btn" type="button" data-flight-details data-flight='{{ flight | tojson | e }}'>
+                        <i class="fas fa-info-circle"></i> Details
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="flight-modal" id="flight-modal" aria-hidden="true">
+                <div class="flight-modal-backdrop" data-flight-close></div>
+                <div class="flight-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="flight-modal-title">
+                    <button class="flight-modal-close" type="button" data-flight-close aria-label="Fermer">&times;</button>
+                    <h3 class="flight-modal-title" id="flight-modal-title">Details du vol</h3>
+                    <div class="flight-modal-grid">
+                        <div>
+                            <div class="flight-modal-label">Compagnie</div>
+                            <div class="flight-modal-value" data-flight-airline>-</div>
+                        </div>
+                        <div>
+                            <div class="flight-modal-label">Numero</div>
+                            <div class="flight-modal-value" data-flight-number>-</div>
+                        </div>
+                        <div>
+                            <div class="flight-modal-label">Prix</div>
+                            <div class="flight-modal-value" data-flight-price>-</div>
+                        </div>
+                        <div>
+                            <div class="flight-modal-label">Duree</div>
+                            <div class="flight-modal-value" data-flight-duration>-</div>
+                        </div>
+                    </div>
+                    <div class="flight-modal-route">
+                        <div class="flight-modal-label">Itineraire</div>
+                        <div class="flight-modal-value" data-flight-route>-</div>
+                        <div class="flight-modal-value" data-flight-times>-</div>
+                        <div>
+                            <span class="flight-status flight-status-unknown" data-flight-status>statut</span>
+                            <span class="flight-modal-chip" data-flight-trip>-</span>
+                        </div>
+                        <div class="flight-modal-label" data-flight-return-label style="display: none;">Retour</div>
+                        <div class="flight-modal-value" data-flight-return-route style="display: none;"></div>
+                        <div class="flight-modal-value" data-flight-return-times style="display: none;"></div>
+                        <div class="flight-modal-value" data-flight-return-duration style="display: none;"></div>
+                    </div>
+                    <div class="flight-modal-section">
+                        <div class="flight-modal-label">Segments</div>
+                        <div class="flight-modal-segments" data-flight-segments></div>
+                    </div>
+                    <div class="flight-modal-section">
+                        <div class="flight-modal-label">Tarification</div>
+                        <div class="flight-modal-pricing" data-flight-pricing></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    const iataList = document.getElementById('iata-list');
+    const iataInputs = [
+        document.getElementById('departure'),
+        document.getElementById('arrival')
+    ].filter(Boolean);
+    let iataTimer = null;
+    const tripTypeSelect = document.getElementById('trip-type');
+    const returnDateField = document.getElementById('return-date-field');
+    const returnDateInput = document.getElementById('return-date');
+
+    function renderIataOptions(items) {
+        if (!iataList) {
+            return;
+        }
+        iataList.innerHTML = items
+            .map(item => `<option value="${item.iata}" label="${item.label}"></option>`)
+            .join('');
+    }
+
+    function fetchIataSuggestions(query) {
+        if (!iataList) {
+            return;
+        }
+        if (query.length < 2) {
+            renderIataOptions([]);
+            return;
+        }
+        fetch(`/iata-suggest?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(renderIataOptions)
+            .catch(() => renderIataOptions([]));
+    }
+
+    iataInputs.forEach(input => {
+        input.addEventListener('input', event => {
+            const value = event.target.value.trim();
+            window.clearTimeout(iataTimer);
+            iataTimer = window.setTimeout(() => fetchIataSuggestions(value), 250);
+        });
+    });
+
+    function toggleReturnDate() {
+        if (!tripTypeSelect || !returnDateField || !returnDateInput) {
+            return;
+        }
+        const isRoundTrip = tripTypeSelect.value === '1';
+        returnDateField.classList.toggle('is-hidden', !isRoundTrip);
+        returnDateInput.required = isRoundTrip;
+        if (!isRoundTrip) {
+            returnDateInput.value = '';
+        }
+    }
+
+    if (tripTypeSelect) {
+        tripTypeSelect.addEventListener('change', toggleReturnDate);
+        toggleReturnDate();
+    }
+
+    const flightModal = document.getElementById('flight-modal');
+    const flightModalFields = flightModal ? {
+        airline: flightModal.querySelector('[data-flight-airline]'),
+        number: flightModal.querySelector('[data-flight-number]'),
+        price: flightModal.querySelector('[data-flight-price]'),
+        duration: flightModal.querySelector('[data-flight-duration]'),
+        route: flightModal.querySelector('[data-flight-route]'),
+        times: flightModal.querySelector('[data-flight-times]'),
+        returnLabel: flightModal.querySelector('[data-flight-return-label]'),
+        returnRoute: flightModal.querySelector('[data-flight-return-route]'),
+        returnTimes: flightModal.querySelector('[data-flight-return-times]'),
+        returnDuration: flightModal.querySelector('[data-flight-return-duration]'),
+        status: flightModal.querySelector('[data-flight-status]'),
+        trip: flightModal.querySelector('[data-flight-trip]'),
+        segments: flightModal.querySelector('[data-flight-segments]'),
+        pricing: flightModal.querySelector('[data-flight-pricing]')
+    } : null;
+    function setModalText(element, value) {
+        if (!element) {
+            return;
+        }
+        element.textContent = value && String(value).trim() ? value : '-';
+    }
+
+    function formatPrice(flight) {
+        if (flight.price === null || flight.price === undefined || flight.price === '') {
+            return 'Prix indisponible';
+        }
+        const currency = flight.currency ? ` ${flight.currency}` : '';
+        return `${flight.price}${currency}`;
+    }
+
+    function renderSegments(segments) {
+        if (!flightModalFields || !flightModalFields.segments) {
+            return;
+        }
+        flightModalFields.segments.innerHTML = '';
+        if (!segments || !segments.length) {
+            flightModalFields.segments.textContent = 'Aucun segment.';
+            return;
+        }
+        segments.forEach(segment => {
+            const card = document.createElement('div');
+            card.className = 'flight-modal-segment';
+            const title = document.createElement('div');
+            title.className = 'flight-modal-segment-title';
+            const titleParts = [segment.direction, segment.flight].filter(Boolean);
+            title.textContent = titleParts.length ? titleParts.join(' · ') : 'Segment';
+            const row = document.createElement('div');
+            row.className = 'flight-modal-segment-row';
+            const parts = [
+                `Depart: ${segment.dep_iata || '-'} ${segment.dep_time || '-'}`,
+                `Arrivee: ${segment.arr_iata || '-'} ${segment.arr_time || '-'}`,
+                `Duree: ${segment.duration || '-'}`,
+                `Appareil: ${segment.aircraft || '-'}`,
+                `Stops: ${segment.stops != null ? segment.stops : '-'}`,
+                `Opere par: ${segment.operating || segment.carrier || '-'}`
+            ];
+            parts.forEach(text => {
+                const span = document.createElement('span');
+                span.textContent = text;
+                row.appendChild(span);
+            });
+            card.appendChild(title);
+            card.appendChild(row);
+            flightModalFields.segments.appendChild(card);
+        });
+    }
+
+    function renderPricing(flight) {
+        if (!flightModalFields || !flightModalFields.pricing) {
+            return;
+        }
+        flightModalFields.pricing.innerHTML = '';
+        const currency = flight.currency ? ` ${flight.currency}` : '';
+        const rows = [];
+        if (flight.price_total) {
+            rows.push({ label: 'Total', value: `${flight.price_total}${currency}` });
+        }
+        if (flight.price_base) {
+            rows.push({ label: 'Base', value: `${flight.price_base}${currency}` });
+        }
+        if (flight.price_grand_total) {
+            rows.push({ label: 'Grand total', value: `${flight.price_grand_total}${currency}` });
+        }
+        if (flight.seats) {
+            rows.push({ label: 'Places dispo', value: flight.seats });
+        }
+        if (flight.validating_carriers && flight.validating_carriers.length) {
+            rows.push({ label: 'Compagnies validantes', value: flight.validating_carriers.join(', ') });
+        }
+        if (!rows.length) {
+            const empty = document.createElement('div');
+            empty.textContent = 'Details tarifaires indisponibles.';
+            flightModalFields.pricing.appendChild(empty);
+            return;
+        }
+        rows.forEach(row => {
+            const line = document.createElement('div');
+            line.className = 'flight-modal-pricing-item';
+            const label = document.createElement('span');
+            label.textContent = row.label;
+            const value = document.createElement('div');
+            value.textContent = row.value;
+            line.appendChild(label);
+            line.appendChild(value);
+            flightModalFields.pricing.appendChild(line);
+        });
+    }
+
+    function toggleField(element, show) {
+        if (!element) {
+            return;
+        }
+        element.style.display = show ? '' : 'none';
+    }
+
+    function openFlightModal(flight) {
+        if (!flightModal || !flightModalFields) {
+            return;
+        }
+        setModalText(flightModalFields.airline, flight.airline || 'Compagnie inconnue');
+        setModalText(flightModalFields.number, flight.flight_number || '-');
+        setModalText(flightModalFields.price, formatPrice(flight));
+        setModalText(flightModalFields.duration, flight.duration || '-');
+        setModalText(flightModalFields.route, `${flight.dep_iata || '-'} ${flight.dep_airport || ''} -> ${flight.arr_iata || '-'} ${flight.arr_airport || ''}`.trim());
+        setModalText(flightModalFields.times, `${flight.dep_time || '-'} -> ${flight.arr_time || '-'}`.trim());
+        setModalText(flightModalFields.trip, flight.trip_type === '1' ? 'Aller-retour' : 'Aller simple');
+        if (flightModalFields.status) {
+            const status = flight.status || 'unknown';
+            const statusClass = flight.status_class || 'unknown';
+            flightModalFields.status.textContent = status;
+            flightModalFields.status.className = `flight-status flight-status-${statusClass}`;
+        }
+        const hasReturn = Boolean(flight.return_route || flight.return_times || flight.return_duration);
+        toggleField(flightModalFields.returnLabel, hasReturn);
+        toggleField(flightModalFields.returnRoute, hasReturn);
+        toggleField(flightModalFields.returnTimes, hasReturn);
+        toggleField(flightModalFields.returnDuration, hasReturn);
+        if (hasReturn) {
+            setModalText(flightModalFields.returnRoute, flight.return_route || '-');
+            setModalText(flightModalFields.returnTimes, flight.return_times || '-');
+            setModalText(flightModalFields.returnDuration, flight.return_duration || '-');
+        }
+        renderSegments(flight.segments || []);
+        renderPricing(flight);
+        flightModal.classList.add('active');
+        flightModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeFlightModal() {
+        if (!flightModal) {
+            return;
+        }
+        flightModal.classList.remove('active');
+        flightModal.setAttribute('aria-hidden', 'true');
+    }
+
+    document.querySelectorAll('[data-flight-details]').forEach(button => {
+        button.addEventListener('click', () => {
+            const raw = button.getAttribute('data-flight');
+            if (!raw) {
+                return;
+            }
+            try {
+                openFlightModal(JSON.parse(raw));
+            } catch (error) {
+                console.error('Flight modal parse error', error);
+            }
+        });
+    });
+
+    if (flightModal) {
+        flightModal.querySelectorAll('[data-flight-close]').forEach(element => {
+            element.addEventListener('click', closeFlightModal);
+        });
+    }
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeFlightModal();
+        }
+    });
+
+</script>
 
 <section class="section">
     <div class="container">

@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import os
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
 import csv
-from datetime import datetime
+import requests
+from datetime import datetime, timedelta
 from functools import wraps
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
@@ -24,7 +25,14 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
 limiter = Limiter(get_remote_address, app=app, default_limits=[])
 app.secret_key = 'votre_cle_secrete_ici_pour_les_sessions'
 
+
+@app.context_processor
+def inject_current_year():
+    return {"current_year": datetime.utcnow().year}
+
 # --- CONFIGURATION POUR L'ENVOI D'EMAILS ---
+
+
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
@@ -45,6 +53,20 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(os.path.join(UPLOAD_FOLDER, 'destinations'), exist_ok=True)
 DATA_FILE = 'data.json'
 MESSAGES_FILE = 'messages.csv'
+IATA_DATA_FILE = os.path.join(os.path.dirname(__file__), 'iata_airports.json')
+
+AIRLABS_API_KEY = os.environ.get('AIRLABS_API_KEY', '')
+AIRLABS_BASE_URL = os.environ.get('AIRLABS_BASE_URL', 'https://airlabs.co/api/v9')
+AIRLABS_ENDPOINT = os.environ.get('AIRLABS_ENDPOINT', 'flights')
+SERPAPI_KEY = os.environ.get('SERPAPI_KEY', '')
+SERPAPI_URL = os.environ.get('SERPAPI_URL', 'https://serpapi.com/search.json')
+AMADEUS_CLIENT_ID = os.environ.get('AMADEUS_CLIENT_ID', '')
+AMADEUS_CLIENT_SECRET = os.environ.get('AMADEUS_CLIENT_SECRET', '')
+AMADEUS_BASE_URL = os.environ.get('AMADEUS_BASE_URL', 'https://test.api.amadeus.com')
+
+_iata_cache = None
+_amadeus_token = None
+_amadeus_token_expires_at = None
 
 S3_BUCKET = os.environ.get('S3_BUCKET')
 S3_REGION = os.environ.get('S3_REGION', 'us-east-1')
@@ -65,8 +87,10 @@ if not admin_logger.handlers:
     admin_logger.setLevel(logging.INFO)
     admin_logger.propagate = False
 
+
 def s3_enabled():
     return bool(S3_BUCKET and _s3_client)
+
 
 def s3_base_url():
     if S3_PUBLIC_BASE:
@@ -74,6 +98,7 @@ def s3_base_url():
     if S3_REGION == 'us-east-1':
         return f"https://{S3_BUCKET}.s3.amazonaws.com"
     return f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com"
+
 
 def build_s3_key(subdir, filename):
     prefix = S3_PREFIX.strip('/')
@@ -85,6 +110,7 @@ def build_s3_key(subdir, filename):
     parts.append(filename)
     return "/".join(parts)
 
+
 def upload_file_to_s3(file_obj, key, content_type):
     extra_args = {}
     if content_type:
@@ -93,6 +119,7 @@ def upload_file_to_s3(file_obj, key, content_type):
         _s3_client.upload_fileobj(file_obj, S3_BUCKET, key, ExtraArgs=extra_args)
     else:
         _s3_client.upload_fileobj(file_obj, S3_BUCKET, key)
+
 
 def save_upload(file_obj, subdir):
     filename = secure_filename(file_obj.filename)
@@ -112,6 +139,7 @@ def save_upload(file_obj, subdir):
     file_obj.save(os.path.join(dest_dir, filename))
     return rel_path
 
+
 def backup_file(local_path, key_name):
     if not s3_enabled():
         return
@@ -130,16 +158,386 @@ def backup_file(local_path, key_name):
     except (OSError, BotoCoreError, ClientError) as exc:
         app.logger.warning("S3 backup failed for %s: %s", local_path, exc)
 
+
 def get_client_ip():
     forwarded = request.headers.get('X-Forwarded-For', '')
     if forwarded:
         return forwarded.split(',')[0].strip()
     return request.remote_addr or 'unknown'
 
+
 def is_https_request():
     if request.is_secure:
         return True
     return request.headers.get('X-Forwarded-Proto', '').lower() == 'https'
+
+
+def load_iata_airports():
+    global _iata_cache
+    if _iata_cache is not None:
+        return _iata_cache
+    if not os.path.exists(IATA_DATA_FILE):
+        _iata_cache = []
+        return _iata_cache
+    with open(IATA_DATA_FILE, 'r', encoding='utf-8') as f:
+        _iata_cache = json.load(f)
+    return _iata_cache
+
+
+def suggest_airports(query):
+    query = (query or '').strip().lower()
+    if len(query) < 2:
+        return []
+    results = []
+    for airport in load_iata_airports():
+        code = (airport.get('iata') or '').lower()
+        city = (airport.get('city') or '').lower()
+        name = (airport.get('name') or '').lower()
+        country = (airport.get('country') or '').lower()
+        if query in code or query in city or query in name or query in country:
+            label = f"{airport.get('iata')} - {airport.get('city')}, {airport.get('country')} ({airport.get('name')})"
+            results.append({
+                'iata': airport.get('iata'),
+                'label': label
+            })
+        if len(results) >= 10:
+            break
+    return results
+
+
+def format_api_datetime(value):
+    if not value:
+        return ''
+    if isinstance(value, (int, float)):
+        return datetime.utcfromtimestamp(value).strftime('%d/%m %H:%M')
+    if isinstance(value, str):
+        cleaned = value.strip()
+        if cleaned.isdigit():
+            return datetime.utcfromtimestamp(int(cleaned)).strftime('%d/%m %H:%M')
+        value = cleaned.replace('Z', '+00:00')
+    try:
+        parsed = datetime.fromisoformat(value)
+    except ValueError:
+        for fmt in ('%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d'):
+            try:
+                parsed = datetime.strptime(value, fmt)
+                break
+            except ValueError:
+                parsed = None
+        if not parsed:
+            return value
+    return parsed.strftime('%d/%m %H:%M')
+
+def parse_int(value, default=None, min_value=None, max_value=None):
+    try:
+        number = int(value)
+    except (TypeError, ValueError):
+        return default
+    if min_value is not None and number < min_value:
+        return min_value
+    if max_value is not None and number > max_value:
+        return max_value
+    return number
+
+def format_duration_minutes(minutes):
+    if minutes is None:
+        return ''
+    try:
+        minutes = int(minutes)
+    except (TypeError, ValueError):
+        return ''
+    if minutes <= 0:
+        return ''
+    hours = minutes // 60
+    remainder = minutes % 60
+    if hours and remainder:
+        return f"{hours}h {remainder}m"
+    if hours:
+        return f"{hours}h"
+    return f"{remainder}m"
+
+def format_duration_iso(value):
+    if not value or not isinstance(value, str) or not value.startswith('PT'):
+        return ''
+    value = value[2:]
+    hours = 0
+    minutes = 0
+    if 'H' in value:
+        hours_part, value = value.split('H', 1)
+        try:
+            hours = int(hours_part) if hours_part else 0
+        except ValueError:
+            hours = 0
+    if 'M' in value:
+        minutes_part = value.split('M', 1)[0]
+        try:
+            minutes = int(minutes_part) if minutes_part else 0
+        except ValueError:
+            minutes = 0
+    if not hours and not minutes:
+        return ''
+    return format_duration_minutes(hours * 60 + minutes)
+
+def get_amadeus_token():
+    global _amadeus_token, _amadeus_token_expires_at
+    if not AMADEUS_CLIENT_ID or not AMADEUS_CLIENT_SECRET:
+        return None, "La cle API n'est pas configuree."
+    if _amadeus_token and _amadeus_token_expires_at:
+        if datetime.utcnow() < _amadeus_token_expires_at:
+            return _amadeus_token, None
+    try:
+        response = requests.post(
+            f"{AMADEUS_BASE_URL}/v1/security/oauth2/token",
+            data={
+                'grant_type': 'client_credentials',
+                'client_id': AMADEUS_CLIENT_ID,
+                'client_secret': AMADEUS_CLIENT_SECRET
+            },
+            timeout=12
+        )
+    except requests.RequestException as exc:
+        app.logger.warning("Amadeus token request failed: %s", exc)
+        return None, "Impossible de contacter l'API pour le moment."
+    if response.status_code != 200:
+        app.logger.warning("Amadeus auth error status %s: %s", response.status_code, response.text[:200])
+        return None, "Erreur d'authentification API."
+    payload = response.json()
+    token = payload.get('access_token')
+    if not token:
+        return None, "Erreur d'authentification API."
+    expires_in = payload.get('expires_in', 1800)
+    try:
+        expires_in = int(expires_in)
+    except (TypeError, ValueError):
+        expires_in = 1800
+    _amadeus_token = token
+    _amadeus_token_expires_at = datetime.utcnow() + timedelta(seconds=max(expires_in - 60, 60))
+    return _amadeus_token, None
+
+def call_amadeus(endpoint, params):
+    token, error = get_amadeus_token()
+    if not token:
+        return None, error
+    try:
+        response = requests.get(
+            f"{AMADEUS_BASE_URL}{endpoint}",
+            params=params,
+            headers={'Authorization': f"Bearer {token}"},
+            timeout=20
+        )
+    except requests.RequestException as exc:
+        app.logger.warning("Amadeus request failed: %s", exc)
+        return None, "Impossible de contacter l'API pour le moment."
+    if response.status_code != 200:
+        app.logger.warning("Amadeus error status %s: %s", response.status_code, response.text[:200])
+        message = None
+        try:
+            payload = response.json()
+        except ValueError:
+            payload = None
+        if payload and payload.get('errors'):
+            first_error = payload['errors'][0]
+            message = first_error.get('detail') or first_error.get('title')
+        return None, message or "Erreur de l'API de vols."
+    payload = response.json()
+    if payload.get('errors'):
+        first_error = payload['errors'][0]
+        message = first_error.get('detail') or first_error.get('title')
+        return None, message or "Erreur de l'API de vols."
+    return payload, None
+
+def call_airlabs(endpoint, params):
+    try:
+        response = requests.get(f"{AIRLABS_BASE_URL}/{endpoint}", params=params, timeout=12)
+    except requests.RequestException as exc:
+        app.logger.warning("Flight API request failed: %s", exc)
+        return None, "Impossible de contacter l'API pour le moment."
+    if response.status_code != 200:
+        app.logger.warning("Flight API error status %s: %s", response.status_code, response.text[:200])
+        return None, "Erreur de l'API de vols."
+    payload = response.json()
+    if payload.get('error'):
+        error = payload['error']
+        error_message = error.get('message') if isinstance(error, dict) else str(error)
+        return None, error_message or "Erreur de l'API de vols."
+    if payload.get('message') and not payload.get('response'):
+        return None, str(payload.get('message'))
+    return payload.get('response') or [], None
+
+def call_serpapi(params):
+    params = dict(params)
+    params['engine'] = 'google_flights'
+    params['api_key'] = SERPAPI_KEY
+    try:
+        response = requests.get(SERPAPI_URL, params=params, timeout=20)
+    except requests.RequestException as exc:
+        app.logger.warning("SerpApi request failed: %s", exc)
+        return None, "Impossible de contacter l'API pour le moment."
+    if response.status_code != 200:
+        app.logger.warning("SerpApi error status %s: %s", response.status_code, response.text[:200])
+        return None, "Erreur de l'API de vols."
+    payload = response.json()
+    status = payload.get('search_metadata', {}).get('status')
+    if status != 'Success':
+        error_message = payload.get('error') or payload.get('search_metadata', {}).get('status')
+        return None, error_message or "Erreur de l'API de vols."
+    return payload, None
+
+def lookup_iata_airport(iata):
+    if not iata:
+        return {}
+    code = iata.strip().upper()
+    for airport in load_iata_airports():
+        if (airport.get('iata') or '').upper() == code:
+            return airport
+    return {}
+
+def format_airport_label(info):
+    if not info:
+        return ''
+    city = info.get('city') or ''
+    name = info.get('name') or ''
+    if city and name and city.lower() != name.lower():
+        return f"{city} ({name})"
+    return city or name
+
+def extract_time_value(item, keys):
+    for key in keys:
+        value = item.get(key)
+        if value:
+            return format_api_datetime(value)
+    return ''
+
+def fetch_flight_schedule(dep_iata, arr_iata, flight_date, return_date=None, trip_type='2', travel_class='1', passengers=1, max_price=None, direct_only=False, deep_search=False):
+    if not AMADEUS_CLIENT_ID or not AMADEUS_CLIENT_SECRET:
+        return [], "La cle API n'est pas configuree."
+    travel_class_map = {
+        '1': 'ECONOMY',
+        '2': 'PREMIUM_ECONOMY',
+        '3': 'BUSINESS',
+        '4': 'FIRST'
+    }
+    params = {
+        'originLocationCode': dep_iata,
+        'destinationLocationCode': arr_iata,
+        'departureDate': flight_date,
+        'adults': passengers,
+        'travelClass': travel_class_map.get(travel_class, 'ECONOMY')
+    }
+    if trip_type == '1' and return_date:
+        params['returnDate'] = return_date
+    if max_price is not None:
+        params['maxPrice'] = max_price
+    if direct_only:
+        params['nonStop'] = 'true'
+
+    payload, error = call_amadeus('/v2/shopping/flight-offers', params)
+    if payload is None:
+        return [], error
+
+    items = payload.get('data') or []
+    if not items:
+        return [], "Aucun vol trouve pour ces criteres."
+
+    carriers = (payload.get('dictionaries') or {}).get('carriers', {})
+    flights = []
+    for item in items[:8]:
+        itineraries = item.get('itineraries') or []
+        if not itineraries:
+            continue
+        outbound = itineraries[0]
+        outbound_segments = outbound.get('segments') or []
+        if not outbound_segments:
+            continue
+        first = outbound_segments[0]
+        last = outbound_segments[-1]
+        dep_info = first.get('departure') or {}
+        arr_info = last.get('arrival') or {}
+        dep_code = (dep_info.get('iataCode') or '').upper()
+        arr_code = (arr_info.get('iataCode') or '').upper()
+        dep_airport = format_airport_label(lookup_iata_airport(dep_code)) or dep_code or '-'
+        arr_airport = format_airport_label(lookup_iata_airport(arr_code)) or arr_code or '-'
+        airline_code = first.get('carrierCode') or ''
+        airline_name = carriers.get(airline_code, airline_code or 'Compagnie inconnue')
+        number = first.get('number') or '-'
+        flight_number = f"{airline_code}{number}" if airline_code and number != '-' else number
+        price_info = item.get('price') or {}
+        price_total = price_info.get('total')
+        price_base = price_info.get('base')
+        price_grand_total = price_info.get('grandTotal')
+        currency = price_info.get('currency') or 'USD'
+        segments_info = []
+        for idx, itinerary in enumerate(itineraries):
+            direction = 'Retour' if idx == 1 else 'Aller'
+            for segment in (itinerary.get('segments') or []):
+                seg_dep = segment.get('departure') or {}
+                seg_arr = segment.get('arrival') or {}
+                seg_carrier = segment.get('carrierCode') or ''
+                seg_number = segment.get('number') or ''
+                seg_flight = f"{seg_carrier}{seg_number}" if seg_carrier and seg_number else ''
+                segments_info.append({
+                    'direction': direction,
+                    'carrier': seg_carrier,
+                    'number': seg_number,
+                    'flight': seg_flight,
+                    'dep_iata': (seg_dep.get('iataCode') or '').upper(),
+                    'dep_time': format_api_datetime(seg_dep.get('at')),
+                    'arr_iata': (seg_arr.get('iataCode') or '').upper(),
+                    'arr_time': format_api_datetime(seg_arr.get('at')),
+                    'duration': format_duration_iso(segment.get('duration')),
+                    'aircraft': (segment.get('aircraft') or {}).get('code'),
+                    'stops': segment.get('numberOfStops'),
+                    'operating': (segment.get('operating') or {}).get('carrierCode')
+                })
+        traveler_pricings = item.get('travelerPricings') or []
+        first_pricing = traveler_pricings[0] if traveler_pricings else {}
+        return_route = ''
+        return_times = ''
+        return_duration = ''
+        if len(itineraries) > 1:
+            return_segments = itineraries[1].get('segments') or []
+            if return_segments:
+                ret_first = return_segments[0]
+                ret_last = return_segments[-1]
+                ret_dep = ret_first.get('departure') or {}
+                ret_arr = ret_last.get('arrival') or {}
+                ret_dep_code = (ret_dep.get('iataCode') or '').upper()
+                ret_arr_code = (ret_arr.get('iataCode') or '').upper()
+                ret_dep_airport = format_airport_label(lookup_iata_airport(ret_dep_code)) or ret_dep_code or '-'
+                ret_arr_airport = format_airport_label(lookup_iata_airport(ret_arr_code)) or ret_arr_code or '-'
+                return_route = f"{ret_dep_code} {ret_dep_airport} -> {ret_arr_code} {ret_arr_airport}".strip()
+                return_times = f"{format_api_datetime(ret_dep.get('at'))} -> {format_api_datetime(ret_arr.get('at'))}".strip()
+                return_duration = format_duration_iso(itineraries[1].get('duration'))
+        flights.append({
+            'airline': airline_name,
+            'flight_number': flight_number,
+            'status': 'scheduled',
+            'status_class': 'scheduled',
+            'dep_airport': dep_airport,
+            'dep_iata': dep_code or '-',
+            'dep_time': format_api_datetime(dep_info.get('at')),
+            'arr_airport': arr_airport,
+            'arr_iata': arr_code or '-',
+            'arr_time': format_api_datetime(arr_info.get('at')),
+            'price': price_total,
+            'currency': currency,
+            'price_total': price_total,
+            'price_base': price_base,
+            'price_grand_total': price_grand_total,
+            'seats': item.get('numberOfBookableSeats'),
+            'validating_carriers': item.get('validatingAirlineCodes') or [],
+            'segments': segments_info,
+            'fare_details': first_pricing.get('fareDetailsBySegment') or [],
+            'raw': item,
+            'duration': format_duration_iso(outbound.get('duration')),
+            'return_route': return_route,
+            'return_times': return_times,
+            'return_duration': return_duration,
+            'trip_type': trip_type
+        })
+    if not flights:
+        return [], "Aucun vol trouve pour ces criteres."
+    return flights, None
 
 # --- FONCTIONS DE GESTION DES DONNÉES ---
 def load_data():
@@ -290,7 +688,63 @@ if FORCE_HTTPS:
 # --- ROUTES PUBLIQUES ---
 @app.route('/')
 def index():
-    return render_template('index.html', data=load_data())
+    return render_template('index.html', data=load_data(), flight_results=None, flight_error=None, flight_query={})
+
+@app.route('/iata-suggest')
+def iata_suggest():
+    query = request.args.get('q', '')
+    return jsonify(suggest_airports(query))
+
+@app.route('/flight-search', methods=['POST'])
+def flight_search():
+    dep_iata = (request.form.get('departure') or '').strip().upper()
+    arr_iata = (request.form.get('arrival') or '').strip().upper()
+    flight_date = (request.form.get('flight_date') or '').strip()
+    return_date = (request.form.get('return_date') or '').strip()
+    trip_type = (request.form.get('trip_type') or '2').strip()
+    travel_class = (request.form.get('travel_class') or '1').strip()
+    passengers = parse_int(request.form.get('passengers'), default=1, min_value=1, max_value=9)
+    max_price_value = (request.form.get('max_price') or '').strip()
+    max_price = parse_int(max_price_value, default=None, min_value=0)
+    direct_only = request.form.get('direct_only') == 'on'
+    deep_search = request.form.get('deep_search') == 'on'
+    if trip_type not in {'1', '2'}:
+        trip_type = '2'
+    if travel_class not in {'1', '2', '3', '4'}:
+        travel_class = '1'
+    flight_query = {
+        'dep_iata': dep_iata,
+        'arr_iata': arr_iata,
+        'flight_date': flight_date,
+        'return_date': return_date,
+        'trip_type': trip_type,
+        'travel_class': travel_class,
+        'passengers': passengers,
+        'max_price': max_price if max_price is not None else max_price_value,
+        'direct_only': direct_only,
+        'deep_search': deep_search
+    }
+    if not dep_iata or not arr_iata or not flight_date:
+        error = "Veuillez renseigner le depart, l'arrivee et la date."
+        return render_template('index.html', data=load_data(), flight_results=[], flight_error=error, flight_query=flight_query)
+    if trip_type == '1' and not return_date:
+        error = "Veuillez renseigner la date de retour."
+        return render_template('index.html', data=load_data(), flight_results=[], flight_error=error, flight_query=flight_query)
+    results, error = fetch_flight_schedule(
+        dep_iata,
+        arr_iata,
+        flight_date,
+        return_date=return_date,
+        trip_type=trip_type,
+        travel_class=travel_class,
+        passengers=passengers,
+        max_price=max_price,
+        direct_only=direct_only,
+        deep_search=deep_search
+    )
+    if not error and not results:
+        error = "Aucun vol trouve pour ces criteres."
+    return render_template('index.html', data=load_data(), flight_results=results, flight_error=error, flight_query=flight_query)
 
 @app.route('/services')
 def services():
@@ -399,7 +853,7 @@ def upload_logo():
 @login_required
 def add_destination():
     site_data = load_data()
-    new_dest = { "nom": request.form['nom'], "description": request.form['description'], "prix": request.form['prix'], "image": " " }
+    new_dest = {"nom": request.form['nom'], "description": request.form['description'], "prix": request.form['prix'], "image": ""}
     if 'image' in request.files and request.files['image'].filename != '':
         file = request.files['image']
         if allowed_file(file.filename):
@@ -903,7 +1357,6 @@ index_template = '''
         box-sizing: border-box;
     }
     </style>
-
 </style>
 
 <section class="hero">
@@ -1211,10 +1664,10 @@ def write_templates():
             with open(path, 'w', encoding='utf-8') as f:
                 f.write(content)
 
+
 if __name__ == '__main__':
     load_data()
     write_templates()
-
 
     load_data()
     write_templates()

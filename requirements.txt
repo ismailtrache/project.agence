@@ -5,3 +5,4 @@ Flask-Mail
 python-dotenv
 boto3
 Flask-Limiter
+requests
